@@ -1,0 +1,387 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+
+<style>
+body{
+background-color: #eee;
+}
+
+#titel {
+width: 100%;
+border-bottom: 1px solid black; 
+}
+
+#logo{
+	float: right;
+    height:80px;
+	margin: 0 0 0 20px;
+}
+
+#rectangle{
+	float: left;
+    width:80px;
+    height:80px;
+	margin: 0 20px 0 0;
+    background:${Gruppe['SpektrumsFarbe']};
+}
+
+
+form:ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+form {
+    margin: 0 auto;
+    width: 700px;
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+	background-color: white;
+}
+
+div+div {
+    margin-top: 1em;
+}
+
+#FehlercodesErlaeuterung {
+    margin-left: 200px;
+	font-size: 80%;
+}
+#FehlercodesErlaeuterung ul{
+    margin: 0px 0;
+}
+#FehlercodesErlaeuterung li{
+    margin: 0px 0;
+}
+
+label span {
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+}
+
+input, textarea, select {
+    font: 1em sans-serif;
+    width: 470px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+
+select option{
+    font-size: 80%;
+}
+input[type=checkbox], input[type=radio] {
+    width: auto;
+    border: none;
+}
+
+select:invalid,  input:invalid {
+  border: 2px dashed red;
+  background-color: #fff1f1;
+}
+
+select:valid, input:valid {
+  border: 2px solid green;
+  background-color: #f1fff1;
+}
+
+input:focus, textarea:focus {
+    border-color: #000;
+}
+
+textarea {
+    vertical-align: top;
+    //height: 5em;
+    resize: vertical;
+}
+
+fieldset {
+    width: 250px;
+    box-sizing: border-box;
+    margin-left: 136px;
+    border: 1px solid #999;
+}
+
+button {
+    margin: 20px 0 0 124px;
+}
+
+label {
+  position: relative;
+}
+
+label em {
+  position: absolute;
+  right: 5px;
+  top: 20px;
+}
+
+::placeholder {
+  color: #ccc;
+}
+
+
+</style>
+
+
+
+<style>
+	/* allgemeines */
+	input.hackbox {
+	  display:none;
+	}
+	 
+	/* default-Zustand */
+	span.volltext {
+	  display:none;
+	}
+	 
+	label.mehr_lesen {
+	  color:#0091D2;
+	  margin-left:200px;
+	}
+	 
+	label.mehr_lesen::before {
+	  content:"Einblenden: ";
+	  color:#0091D2;
+	}
+	 
+	/* bei gesetztem Haken */
+	input.mehr_lesen:checked ~ span.volltext {
+	  display:inline;
+	} 
+	 
+	input.mehr_lesen:checked ~ label.mehr_lesen::before {
+	  content:"Ausblenden: ";
+	  color:#0091D2;
+	}
+</style>
+
+
+<div id="titel">
+<div id="rectangle"></div>
+<img id="logo" src="/static/menlo-systems-1024x312.png">
+<b>Meldung eines nicht konformes Ereignisses (NCR)</b>
+<h1>${Gruppe['name']}</h1>
+</div>
+<div>
+
+
+
+
+<form method="post" action="/${Gruppe['id']}/meldungfertig">
+<section>
+    <h2>Wo?</h2>
+    <p>
+		<label for="Projektbezug"><span>Projektbezug</span></label>
+		<input type="text" id="Projektbezug" name="Projektbezug" placeholder="AU0815" required pattern="^(AU\d{5}( .+)?)$|^([06-9]\d{3})$|^-$" title="0xxx : Sonstiges
+6xxx : Kostenträger
+7xxx : Kostenträger
+9xxx : Externe Projekte
+8xxx : Interne Projekte
+AUxxxxx : Aufträge
+- : N/A">
+    </p>
+    <p>
+		<label for="Baugruppe"><span>betroffene Baugruppe (ERP)</span></label>
+		<input type="text" id="Baugruppe" name="Baugruppe" placeholder="654321_010"  required pattern="^([0-9]{6}_[0-9]{3}(,[0-9]{6}_[0-9]{3})*)|-$" title='In welcher Baugruppe ist das Problem aufgetreten? 
+Stammnummer + "_" + Version oder "-"; mehrere Baugruppen durch Kommata getrennt (keine Leerzeichen)'>
+    </p>
+</section>	
+<section>	
+    <h2>Was?</h2>
+    <p>
+		<label for="Thema"><span>Thema/Kurzbeschreibung</span></label>
+		<input type="text" id="Thema" name="Thema" placeholder="Getaperter PM-Spleiß misslungen" required>
+    </p>
+		<p>
+	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Details">
+	<span class="volltext">
+		
+			<label for="Beschreibung"><span>Details/ausführliche Beschreibung</span></label>
+			<textarea onfocus="this.rows=10;" rows="2" cols="50" name="Beschreibung" id="Beschreibung" placeholder="Führt man den Spleiß nach Aufbauanleitung aus, ist die Dämpfung oft > 7 dB. Heute waren 3 Versuche notwendig."></textarea>
+	</span>
+	<label class="mehr_lesen" for="mehr_lesen_Details">Details angeben</label>
+		</p>
+    <p>
+	
+	
+		<label for="Fehler"><span>Problem-Kategorie</span></label>
+		<select name="Fehler" id="Fehler" required>
+			<option hidden disabled selected value> -- Bitte auswählen -- </option>
+			<tal:loop tal:repeat="fehler Fehlerursachen">
+				<option value="${fehler['name']}" style="color:${fehler['farbe']}; font-weight:${fehler['gewicht']}">${fehler['name']}</option>
+			</tal:loop>
+		</select> 
+		<div id="FehlercodesErlaeuterung"></div>
+
+		<script  type="text/javascript">
+		var FehlercodesErlaeuterungen;
+		$.getJSON("/static/Fehlercodes_Erlaeuterungen.json", 
+			function(data) {
+				FehlercodesErlaeuterungen = data;
+			}
+		);		
+		$("#Fehler").change(function() {
+		  schl = $(this).val().split(":")[0];
+		  if(FehlercodesErlaeuterungen && schl in FehlercodesErlaeuterungen){
+			//alert(FehlercodesErlaeuterungen[schl]);
+			$('#FehlercodesErlaeuterung').show();
+			var Zeilen = FehlercodesErlaeuterungen[schl].split("\n")
+			var html = []
+			Zeilen.forEach(function(el){
+			  if(el.length>0)
+			    html.push('<li>' + el + '</li>');
+			});
+			//debugger;
+			if(html.length === 0){
+			  $('#FehlercodesErlaeuterung').hide();
+			  return;
+			}
+			html = html.join("");
+			$('#FehlercodesErlaeuterung').html("<b>Beispiele:</b><ul>"+html+"</ul>");
+		  }else{
+		    $('#FehlercodesErlaeuterung').hide();
+		  }
+		});
+		$("#Fehler").trigger("change");
+		</script>
+
+	</p>
+    <p>
+		<label for="Bauteil"><span>betroffene Bauteile (ERP)</span></label>
+		<input type="text" id="Bauteil" name="Bauteil" placeholder="212342,123456 oder -" required pattern="^-$|^[0-9]{6}(_[0-9]{3})?(,[0-9]{6}(_[0-9]{3})?)*$" title="Welches Teil hat das Problem konkret ausgelöst? z. B., Welches Bauteil war defekt? 
+AX-Nummer von einem oder mehreren ursächlichen Artikeln, durch Komma getrennt (keine Leerzeichen). 
+Bei Baugruppen bitte die übliche Notation mit xxxxxx_xxx verwenden.
+Falls nicht zutreffend: Bitte '-' eintragen.
+">
+    </p>
+	
+	
+</section>	
+<section>	
+    <h2>Wie?</h2>
+    <p>
+	
+		<label for="Zeit"><span>angefallene Zeit (h)</span></label>
+		<input type="text" id="Zeit" name="Zeit" pattern="^[0-9]+\.[0-9]+$|^[0-9]+$" placeholder="2.75" required title="Bisher aufgewendete Zeit in Stunden.">
+	
+    </p>
+    <p>
+	
+		<label for="Verursacht_Gattung"><span>Verursacht durch</span></label>
+		<select name="Verursacht_Gattung" id="Verursacht_Gattung" style="width:200px" required>
+			<option hidden disabled selected value> -- Bitte auswählen -- </option>
+				<option value="Gruppe">Gruppe</option>
+				<option value="Kreditor">Kreditor</option>
+				<option value="Hersteller">Hersteller (falls er kein Kreditor ist!)</option>
+				<option value="unbekannt">unbekannt</option>
+		</select> 
+		<select name="Verursacht_Gruppe" id="Verursacht_Gruppe" style="width:200px">
+			<option hidden disabled selected value> -- Bitte auswählen -- </option>
+				<tal:loop tal:repeat="gruppe Gruppen">
+					<option value="${gruppe['id']}">${gruppe['name']}</option>
+				</tal:loop>
+		</select> 
+		<input type="text" id="Verursacht_Kreditor" name="Verursacht_Kreditor" placeholder="70028" style="width:200px", pattern="^7[0-9]{4}$" title="'7xxxx' : Kreditor, siehe AX"> 
+		<input type="text" id="Verursacht_Hersteller" name="Verursacht_Hersteller" placeholder="Samsung" style="width:200px" pattern="^(.+|unbekannt)$" title="Name des Herstellers oder 'unbekannt'"> 
+		
+	<script  type="text/javascript">
+	$("#Verursacht_Gattung").change(function() {
+		$('#Verursacht_Gruppe').hide();
+		$('#Verursacht_Gruppe').prop('required',false);
+		$('#Verursacht_Kreditor').hide();
+		$('#Verursacht_Kreditor').prop('required',false);
+		$('#Verursacht_Hersteller').hide();
+		$('#Verursacht_Hersteller').prop('required',false);
+	  if ($(this).val() == "Gruppe") {
+		$('#Verursacht_Gruppe').show();
+		$('#Verursacht_Gruppe').prop('required',true);
+	  } else if ($(this).val() == "Kreditor") {
+		$('#Verursacht_Kreditor').show();
+		$('#Verursacht_Kreditor').prop('required',true);
+	  } else if ($(this).val() == "Hersteller") {
+		$('#Verursacht_Hersteller').show();
+		$('#Verursacht_Hersteller').prop('required',true);
+	  } else  {
+	  }
+	});
+	$("#Verursacht_Gattung").trigger("change");
+	</script>
+    </p>
+</section>	
+
+
+
+<section>
+	<h2>Meldung</h2>	
+	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Optionen">
+	<span class="volltext">
+
+		<p>
+			<label for="Reparaturauftrag"><span>als interner Reparaturauftrag</span></label>
+			<input type="checkbox" name="Reparaturauftrag" name="Reparaturauftrag" value="Reparaturauftrag"> <span style="font-size:60%">(Pflicht, wenn Elektronik-Produktion hinzugezogen wird.)</span>
+		</p>
+		<p>
+			<label for="Reparaturauftrag"><span>Antrag auf Sonderfreigabe</span></label>
+			<input type="checkbox" name="Sonderfreigabe" value="Sonderfreigabe">
+		</p>
+	</span>
+	<label class="mehr_lesen" for="mehr_lesen_Optionen">NCR Optionen</label>
+	<input type="hidden" name="Gruppe" value="${Gruppe['id']}">
+	<p> <button type="submit" name="submit">Meldung abschicken</button> </p>
+ </section>   
+	
+<section style="filter: blur(1.5px);">
+    <h2>Test</h2>
+	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_lesbarkeit">
+	<span class="volltext">
+		<p>
+		
+			<label for="Verursacht"><span>Verursacht durch</span></label>
+			<input type="text" id="Verursacht durch" name="Verursacht" placeholder="Kreditor:70028">
+		
+		
+		</p>
+	</span>
+	<label class="mehr_lesen" for="mehr_lesen_lesbarkeit"> einblenden...</label>
+	
+</section>		
+	
+</form>
+
+<span style="text-decoration: line-through;">Meldende Gruppe</span><br>
+Produktgruppe<br>
+<span style="text-decoration: line-through;">Verursacht durch</span><br>
+
+<h2>Offene Fragen</h2>
+<ul>
+<li> Namenskürzel-Dropdown/anonym? </li>
+<li> Falls anonym: als welcher Benutzer? Verantwortlicher Linemanager <b>oder</b> zu Erstellender Pseudobenutzer der Produktionslinie <b>oder</b> Admin? </li>
+<li> Woher die Produktgruppen-Information? Ist die überhaupt wichtig? </li>
+<li> <span style="text-decoration: line-through;">"Verursacht durch": Hilft eigentlich bei der Auswertung! Lösung durch Dropdown: ("Gruppe/"Kreditor"/"Hersteller") + Feld für Bezeichnung</span> </li>
+<li> <b>Neue Kategorien:</b>
+	<ul>
+	<li> 06.1:Arbeitsmittel:Gerät/Werkzeug besetzt </li>
+	<li> 06.2:Arbeitsmittel:Gerät/Werkzeug nicht auffindbar </li>
+	<li> 06.3:Arbeitsmittel:Gerät/Werkzeug defekt </li>
+	<li> 07.2.1:Produktionsergebnis: zusätzlicher Aufwand nach Fehleinschätzung </li>
+	<li> 07.2.2:Produktionsergebnis: zusätzlicher Aufwand, höher als üblich </li>
+	<li> 09.1:Organisation:Vorgesehene Arbeitskraft nicht verfügbar </li>
+	</ul>
+
+ </li>
+<li> <b>Umbenennungen:</b>
+	<ul>
+	<li> "defektes Bauteil" -> "betroffene Bauteile" </li>
+	<li> "Problem bereits gelöst" -> "nachträgliche Dokumentation"  ???</li>
+	<li> "Problemlösung erforderlich" -> "interner Reparaturauftrag"  ???</li>
+	</ul>
+ </li>
+
+</ul>
+
+</div>
+
