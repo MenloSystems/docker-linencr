@@ -8,3 +8,4 @@ colorhash
 colormap
 easydev
 python-dateutil
+openpyxl

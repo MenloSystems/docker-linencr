@@ -1,98 +1,15 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 
+
+<link rel="stylesheet" type="text/css" href="/static/basic.css" media="screen" />
+
 <style>
 
 
 #titel {
-width: 100%;
-background-color: ${Gruppe['farbe']};
-
-}
-form:ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-form {
-    margin: 0 auto;
-    width: 700px;
-    padding: 1em;
-    border: 1px solid #CCC;
-    border-radius: 1em;
-	background-color: white;
-}
-
-div+div {
-    margin-top: 1em;
-}
-
-#FehlercodesErlaeuterung {
-    margin-left: 200px;
-	font-size: 80%;
-}
-#FehlercodesErlaeuterung ul{
-    margin: 0px 0;
-}
-#FehlercodesErlaeuterung li{
-    margin: 0px 0;
-}
-
-label span {
-    display: inline-block;
-    width: 200px;
-    text-align: right;
-}
-
-input, textarea, select {
-    font: 1em sans-serif;
-    width: 470px;
-    box-sizing: border-box;
-    border: 1px solid #999;
-}
-
-select option{
-    font-size: 80%;
-}
-input[type=checkbox], input[type=radio] {
-    width: auto;
-    border: none;
-}
-
-input:focus, textarea:focus {
-    border-color: #000;
-}
-
-textarea {
-    vertical-align: top;
-    //height: 5em;
-    resize: vertical;
-}
-
-fieldset {
-    width: 250px;
-    box-sizing: border-box;
-    margin-left: 136px;
-    border: 1px solid #999;
-}
-
-button {
-    margin: 20px 0 0 124px;
-}
-
-label {
-  position: relative;
-}
-
-label em {
-  position: absolute;
-  right: 5px;
-  top: 20px;
-}
-
-::placeholder {
-  color: #ccc;
+	width: 100%;
+	background-color: ${Gruppe['farbe']};
 }
 
 
@@ -142,7 +59,7 @@ label em {
 
 <h2>Die Meldung wurde eingetragen.</h2>
 <br>
-Die NCR-Ticket-Nummer ist <a href="<redacted>/issues/${NCRID}">#${NCRID}</a>.
+Die NCR-Ticket-Nummer ist <a href="<redacted>/issues/${NCRID}" target="_blank">#${NCRID}</a>.
 <br>
 Dort können Ergänzugen und Korrekturen vorgenommen werden.
 <br>

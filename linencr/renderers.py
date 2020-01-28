@@ -10,9 +10,9 @@ import openpyxl.writer.excel
 import csv
 
 try:
-    from StringIO import StringIO # python 2
+	from StringIO import StringIO # python 2
 except ImportError:
-    from io import StringIO # python 3
+	from io import StringIO # python 3
 
 class CSVRenderer(object):
 	def __init__(self, info):
@@ -56,40 +56,30 @@ class CSVRenderer(object):
 ##################################################################################
 		
 class XLSXRenderer(object):
-    XLSX_CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    def __init__(self, info):
-        self.suffix = info.type
-        self.templates_pkg = info.package.__name__ + ".xlsx"
+	XLSX_CONTENT_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+	def __init__(self, info):
+		self.suffix = info.type
 
-    def __call__(self, value, system):
+	def __call__(self, value, system):
 	
-        def get_header(system, value):
-        	# value is the dictionary returned from the view
-        	# request = system["request"]
-        	# context = system["context"]
-        	return ["Row number", "A number", "A string"]
+		wb = openpyxl.Workbook()
+		ws = wb.active
 
-        def iterate_rows(system, value):
-        	for row in range(100):
-        		return [row, 100, "A string"]	
-	
-        templ_name = system["renderer_name"][:-len(self.suffix)]
-        templ_module = importlib.import_module("." + templ_name, self.templates_pkg)
-        wb = openpyxl.Workbook()
-        ws = wb.active
-        if "get_header" in dir(templ_module):
-            ws.append(getattr(templ_module, "get_header")(system, value))
-            ws.row_dimensions[1].font = openpyxl.styles.Font(bold=True)
-        if "iterate_rows" in dir(templ_module):
-            for row in getattr(templ_module, "iterate_rows")(system, value):
-                ws.append(row)
+		# Header
+		ws.append(value.get('header', []))
+		ws.row_dimensions[1].font = openpyxl.styles.Font(bold=True)
+		
+		# Data
+		for raw in value.get('rows', []):
+			row = [raw[key] for key in value.get('header', [])]
+			ws.append(row)
 
-        request = system.get('request')
-        if not request is None:
-            response = request.response
-            ct = response.content_type
-            if ct == response.default_content_type:
-                response.content_type = XLSXRenderer.XLSX_CONTENT_TYPE
-            response.content_disposition = 'attachment;filename=%s.xlsx' % templ_name
+		request = system.get('request')
+		if not request is None:
+			response = request.response
+			ct = response.content_type
+			if ct == response.default_content_type:
+				response.content_type = XLSXRenderer.XLSX_CONTENT_TYPE
+			response.content_disposition = u'attachment;filename={}.xlsx'.format(u"Störereignisse")
 
-        return openpyxl.writer.excel.save_virtual_workbook(wb)		
+		return openpyxl.writer.excel.save_virtual_workbook(wb)		

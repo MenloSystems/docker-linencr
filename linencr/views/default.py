@@ -137,19 +137,49 @@ def my_view_testpage2(request):
 		return HTTPNotFound(u"Die Gruppen-ID '{}' ist ungültig.".format(request.matchdict['Linie']))
 	
 	# in Redmine Ticket anlegen:
-	Baugruppen = request.params[u'Baugruppe']
+	
+	# Projektbezug = request.params[u'Projektbezug']
+	Projektbezug_Gattung = request.params[u'Projektbezug_Gattung']
+	Projektbezug_AU = request.params[u'Projektbezug_AU']
+	Projektbezug_PA = request.params[u'Projektbezug_PA']
+	Projektbezug_Projekt = request.params[u'Projektbezug_Projekt']
+	pData = {'KanBan':Projektbezug_PA,'AU':Projektbezug_AU,'Projekt':Projektbezug_Projekt}
+	pTemp = {'KanBan':"{KanBan}",'AU':"{AU}",'Projekt':"{Projekt}",'NA':"-"}
+	Projektbezug = pTemp[Projektbezug_Gattung].format(**pData)#
+	# print Projektbezug
+	
+	
+	Baugruppe_Gattung = request.params[u'Baugruppe_Gattung']
+	Baugruppe_Baugruppe = request.params[u'Baugruppe_Baugruppe']
+	bData = {'Baugruppe':Baugruppe_Baugruppe}
+	bTemp = {'Baugruppe':"{Baugruppe}",'unbekannt':"-"}
+	Baugruppen = bTemp[Baugruppe_Gattung].format(**bData)#
+	# print Baugruppen
+	
+	FehlerGruppe = request.params[u'FehlerGruppe']
+	# print FehlerGruppe, [x for x in request.params.keys() if x.startswith('FehlerGruppe_')]
+	Fehler = request.params[FehlerGruppe]
+	# print Fehler
+
+	
+	# Baugruppen = request.params[u'Baugruppe']
 	Thema = request.params[u'Thema']
 	Beschreibung = request.params[u'Beschreibung']
-	Projektbezug = request.params[u'Projektbezug']
-	print "Projektbezug",Projektbezug
-	Fehler = request.params[u'Fehler']
+	# print "Projektbezug",Projektbezug
+	# Fehler = request.params[u'Fehler']
 	Bauteil = request.params[u'Bauteil']
+	if Bauteil == "-":
+		Bauteil = ""
+	
 	Zeit = float(request.params[u'Zeit'])
 	Reparaturauftrag = u'Reparaturauftrag' in request.params
 	Sonderfreigabe = u'Sonderfreigabe' in request.params
 	
 	Verursacht_Gattung = request.params[u'Verursacht_Gattung']
-	Verursacht_Gruppe = request.params[u'Verursacht_Gruppe']
+	if "Verursacht_Gruppe" in request.params:
+		Verursacht_Gruppe = request.params[u'Verursacht_Gruppe']
+	else:
+		Verursacht_Gruppe = None
 	Verursacht_Kreditor = request.params[u'Verursacht_Kreditor']
 	Verursacht_Hersteller = request.params[u'Verursacht_Hersteller']
 	vData = {'Gruppe':Verursacht_Gruppe,'Kreditor':Verursacht_Kreditor,'Hersteller':Verursacht_Hersteller}
@@ -216,11 +246,6 @@ def my_view_testpage2(request):
 # @view_config(route_name='MenLineMeldungFertig', renderer='../templates/MenLineMeldungFertig.pt')
 @view_config(route_name='MenLineMeldung', renderer='../templates/MenLineMeldung.pt')
 def my_view_testpage(request):
-	# if 'submit' in request.params:
-		# print request.params
-		# for x in request.POST.items():
-			# print x
-		# request.route_url('MenLineMeldungFertig',Gruppe=request.POST['Gruppe'])
 		
 	redmine_users = MenRedmine.user.all()
 	users = []
@@ -229,6 +254,17 @@ def my_view_testpage(request):
 		
 	Fehlerursachen = [{'name':x[u"value"], 'farbe':Fehlerursachenfarben[x[u"value"][0:2]], 'gewicht':Gewichte[x[u"value"][0:4]]} for x in MenRedmine.custom_field.get(5).possible_values]
 	
+	# for x in MenRedmine.custom_field.get(5).possible_values:
+		# print x[u"value"][0:2], x[u"value"][0:4], x[u"value"]
+		
+	FehlerursachenGruppen = [
+	{'txt':'Information und Vorgehen', 'name':'FehlerGruppe_Information_und_Vorgehen', 'Fehlerursachen':[x for x in Fehlerursachen if x[u"name"][0:2] in ['01', '02']]},
+	{'txt':'Herstellungsschritte und Lager', 'name':'FehlerGruppe_Herstellungsschritte', 'Fehlerursachen':[x for x in Fehlerursachen if x[u"name"][0:2] in ['03', '05', '06', '07']]},
+	{'txt':'Defekte', 'name':'FehlerGruppe_Defekte', 'Fehlerursachen':[x for x in Fehlerursachen if x[u"name"][0:2] in ['04']]},
+	{'txt':'Organisation und Sonstiges', 'name':'FehlerGruppe_Organisation_und_Sonstiges', 'Fehlerursachen':[x for x in Fehlerursachen if x[u"name"][0:2] in ['08', '09', '99']]},
+	{'txt':'Alle', 'name':'FehlerGruppe_Alle', 'Fehlerursachen':Fehlerursachen}
+	]
+		
 	Gruppen = holeGrupen()
 	try:
 		gruppe = next(item for item in Gruppen if item["id"] == request.matchdict['Linie'])
@@ -236,7 +272,7 @@ def my_view_testpage(request):
 		return HTTPNotFound(u"Die Gruppen-ID '{}' ist ungültig.".format(request.matchdict['Linie']))
 	gruppe.update({'farbe':colorhash.ColorHash(gruppe['name'],lightness=(0.85,0.9,0.95), saturation=(0.25, 0.35, 0.5, 0.65, 0.75)).hex})
 	print gruppe
-	return {'Gruppe': gruppe, 'Gruppen': Gruppen, 'Nutzer': users, 'Fehlerursachen':Fehlerursachen}
+	return {'Gruppe': gruppe, 'Gruppen': Gruppen, 'Nutzer': users, 'Fehlerursachen':Fehlerursachen, 'FehlerursachenGruppen':FehlerursachenGruppen}
 
 	
 #########################################################################################
@@ -248,6 +284,7 @@ def my_view_testpage(request):
 @view_config(route_name='Rohdaten', renderer='csv')
 def Rohdaten(request):
 	project_id='e-bu-ncr-tracker'
+	project_id='ZyTest'
 	StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'],request.matchdict['StartMonat'],request.matchdict['StartTag'])
 	StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'],request.matchdict['StoppMonat'],request.matchdict['StoppTag'])
 	
@@ -303,6 +340,7 @@ def Rohdaten(request):
 @view_config(route_name='RohdatenExcel', renderer='xlsx')
 def Rohdaten2(request):
 	project_id='e-bu-ncr-tracker'
+	project_id='ZyTest'	
 	StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'],request.matchdict['StartMonat'],request.matchdict['StartTag'])
 	StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'],request.matchdict['StoppMonat'],request.matchdict['StoppTag'])
 	
