@@ -5,3 +5,4 @@ def includeme(config):
     config.add_route('MenLineMeldungFertig', '/{Linie}/meldungfertig')
     config.add_route('Rohdaten', '/rohdaten/{StartJahr}-{StartMonat}-{StartTag}/{StoppJahr}-{StoppMonat}-{StoppTag}/csv')
     config.add_route('RohdatenExcel', '/rohdaten/{StartJahr}-{StartMonat}-{StartTag}/{StoppJahr}-{StoppMonat}-{StoppTag}/xlsx')
+    config.add_route('Ticket', '<redacted>/issues/{NCRID}')

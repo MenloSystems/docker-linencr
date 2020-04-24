@@ -10,3 +10,4 @@ easydev
 python-dateutil
 openpyxl
 pyyaml
+rutter

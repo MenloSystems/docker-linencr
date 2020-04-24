@@ -1,6 +1,6 @@
-<script src="/static/jquery.min.js" type="text/javascript"></script>
+<script src="${request.static_url('linencr:static/jquery.min.js')}" type="text/javascript"></script>
 
-<link rel="stylesheet" type="text/css" href="/static/basic.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="${request.static_url('linencr:static/basic.css')}" media="screen" />
 
 
 
@@ -9,7 +9,7 @@
 
 <div>
 <div id="titel">
-<img id="logo" src="/static/menlo-systems-1024x312.png">
+<img id="logo" src="${request.static_url('linencr:static/menlo-systems-1024x312.png')}">
 <b>Nicht konforme Ereignisse (NCR)</b>
 <h1>Störungsmeldung</h1>
 </div>
@@ -18,7 +18,7 @@
 
 <ul>
 <tal:loop tal:repeat="gruppe Gruppen">
-	<li style="color:${gruppe['SpektrumsFarbe']}; list-style-type: square;"><a href="/${gruppe['id']}/meldung">${gruppe['name']}<a></li>
+	<li style="color:${gruppe['SpektrumsFarbe']}; list-style-type: square;"><a href="${request.route_path('MenLineMeldung',Linie=gruppe['id'])}">${gruppe['name']}</a></li>
 </tal:loop>
 </ul>
 
@@ -26,7 +26,10 @@
 
 <ul>
 <tal:loop tal:repeat="quartal Quartale">
-	<li>Rohdaten ${quartal['Jahr']}/Q${quartal['Quartal']}:  <a href="/rohdaten/${quartal['q_erster_str']}/${quartal['q_letzter_str']}/csv"> csv</a> | <a href="/rohdaten/${quartal['q_erster_str']}/${quartal['q_letzter_str']}/xlsx">xsls</a></li>
+	<li>Rohdaten ${quartal['Jahr']}/Q${quartal['Quartal']}:
+		<a href="${request.route_path('Rohdaten',StartJahr=quartal['q_StartJahr'],StartMonat=quartal['q_StartMonat'],StartTag=quartal['q_StartTag'],StoppJahr=quartal['q_StoppJahr'],StoppMonat=quartal['q_StoppMonat'],StoppTag=quartal['q_StoppTag'])}">csv</a>
+		|
+		<a href="${request.route_path('RohdatenExcel',StartJahr=quartal['q_StartJahr'],StartMonat=quartal['q_StartMonat'],StartTag=quartal['q_StartTag'],StoppJahr=quartal['q_StoppJahr'],StoppMonat=quartal['q_StoppMonat'],StoppTag=quartal['q_StoppTag'])}">xsls</a>
 </tal:loop>
 </ul>
 

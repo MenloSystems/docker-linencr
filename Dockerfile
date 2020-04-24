@@ -1,5 +1,5 @@
-FROM menlosystems/python27
-
+#FROM menlosystems/python27
+FROM python:3
 
 COPY . /app
 

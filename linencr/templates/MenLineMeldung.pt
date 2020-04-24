@@ -1,6 +1,6 @@
-<script src="/static/jquery.min.js" type="text/javascript"></script>
+<script src="${request.static_url('linencr:static/jquery.min.js')}" type="text/javascript"></script>
 
-<link rel="stylesheet" type="text/css" href="/static/basic.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="${request.static_url('linencr:static/basic.css')}" media="screen" />
 
 <style>
 #rectangle{
@@ -50,7 +50,7 @@
 
 <div id="titel">
 <div id="rectangle"></div>
-<img id="logo" src="/static/menlo-systems-1024x312.png">
+<img id="logo" src="${request.static_url('linencr:static/menlo-systems-1024x312.png')}">
 <b>Störungsmeldung (NCR)</b>
 <h1>${Gruppe['name']}</h1>
 </div>
@@ -59,7 +59,10 @@
 
 
 
+<form method="post" action="${request.route_path('MenLineMeldungFertig',Linie=Gruppe['id'])}">
+<!--
 <form method="post" action="/${Gruppe['id']}/meldungfertig">
+-->
 <section>
     <h2>Wo?</h2>
     <p>
@@ -142,7 +145,7 @@ Stammnummer + "_" + Version; mehrere Baugruppen durch Kommata getrennt (keine Le
 
 		<script  type="text/javascript">
 		var FehlercodesErlaeuterungen;
-		$.getJSON("/static/Fehlercodes_Erlaeuterungen.json", 
+		$.getJSON("${request.static_url('linencr:static/Fehlercodes_Erlaeuterungen.json')}", 
 			function(data) {
 				FehlercodesErlaeuterungen = data;
 			}
