@@ -12,19 +12,6 @@ with open(os.path.join(here, 'requirements.txt')) as f:
     requires = f.read().strip().splitlines()
 
 
-# requires = [
-    # 'plaster_pastedeploy',
-    # 'pyramid',
-    # 'pyramid_chameleon',
-    # 'pyramid_debugtoolbar',
-    # 'waitress',
-    # 'python-redmine',
-    # 'colorhash',
-    # 'colormap',
-    # 'easydev',
-    # 'python-dateutil',
-# ]
-
 tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest >= 3.7.4',
@@ -42,10 +29,10 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
-    author='',
-    author_email='',
+    author='H. Schmitz',
+    author_email='h.schmitz@menlosystems.com',
     url='',
-    keywords='web pyramid pylons',
+    keywords='NCR Schnellmelder',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

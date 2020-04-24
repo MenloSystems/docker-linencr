@@ -1,4 +1,4 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="/static/jquery.min.js" type="text/javascript"></script>
 
 
 <style>
@@ -127,7 +127,7 @@ label em {
 
 
 <div>
-<h1>Meldung eines nicht konformes Ereignisses (NCR)</h1>
+<h1>Schnellmeldung eines nicht konformes Ereignisses (NCR)</h1>
 
 
 
@@ -143,8 +143,8 @@ label em {
 		<label for="Baugruppe"><span>betroffene Baugruppe (ERP)</span></label>
 		<input type="text" id="Baugruppe" name="Baugruppe" placeholder="654321_010" title="In welcher Baugruppe ist das Problem aufgetreten?">
     </p>
-</section>	
-<section>	
+</section>
+<section>
     <h2>Was?</h2>
     <p>
 		<label for="Thema"><span>Thema/Kurzbeschreibung</span></label>
@@ -160,8 +160,8 @@ label em {
 	<label class="mehr_lesen" for="mehr_lesen_Details">Details angeben</label>
 		</p>
     <p>
-	
-	
+
+
 		<label for="Fehler"><span>Problem-Kategorie</span></label>
 		<select name="Fehler" id="Fehler">
 			<option hidden disabled selected value> -- Bitte auswählen -- </option>
@@ -177,11 +177,11 @@ label em {
 			function(data) {
 				FehlercodesErlaeuterungen = data;
 			}
-		);		
+		);
 		$("#Fehler").change(function() {
 		  schl = $(this).val().split(":")[0];
 		  if(FehlercodesErlaeuterungen && schl in FehlercodesErlaeuterungen){
-			//alert(FehlercodesErlaeuterungen[schl]);
+
 			$('#FehlercodesErlaeuterung').show();
 			var Zeilen = FehlercodesErlaeuterungen[schl].split("\n")
 			var html = []
@@ -189,7 +189,7 @@ label em {
 			  if(el.length>0)
 			    html.push('<li>' + el + '</li>');
 			});
-			//debugger;
+
 			if(html.length === 0){
 			  $('#FehlercodesErlaeuterung').hide();
 			  return;
@@ -208,8 +208,7 @@ label em {
 		<label for="Bauteil"><span>betroffene Bauteile (ERP)</span></label>
 		<input type="text" id="Bauteil" name="Bauteil" placeholder="212342,123456"  title="Welches Teil hat das Problem konkret ausgelöst? z. B., Welches Bauteil war defekt?">
     </p>
-	
-	
+
 </section>	
 <section>	
     <h2>Wie?</h2>
@@ -217,10 +216,10 @@ label em {
 	
 		<label for="Zeit"><span>angefallene Zeit (h)</span></label>
 		<input type="text" id="Zeit" name="Zeit" placeholder="2,75 h">
-	
+
     </p>
     <p>
-	
+
 		<label for="Verursacht_Gattung"><span>Verursacht durch</span></label>
 		<select name="Verursacht_Gattung" id="Verursacht_Gattung" style="width:200px">
 			<option hidden disabled selected value> -- Bitte auswählen -- </option>
@@ -236,7 +235,7 @@ label em {
 		</select> 
 		<input type="text" id="Verursacht_Kreditor" name="Verursacht_Kreditor" placeholder="Kreditor:70028" style="width:200px"> 
 		<input type="text" id="Verursacht_Hersteller" name="Verursacht_Hersteller" placeholder="Samsung" style="width:200px"> 
-		
+
 	<script  type="text/javascript">
 	$("#Verursacht_Gattung").change(function() {
 	  if ($(this).val() == "Gruppe") {
@@ -260,7 +259,7 @@ label em {
 	$("#Verursacht_Gattung").trigger("change");
 	</script>
     </p>
-</section>	
+</section>
 
 
 
@@ -295,9 +294,9 @@ label em {
 		</p>
 	</span>
 	<label class="mehr_lesen" for="mehr_lesen_lesbarkeit"> einblenden...</label>
-	
-</section>		
-	
+
+</section>
+
 </form>
 
 <span style="text-decoration: line-through;">Meldende Gruppe</span><br>

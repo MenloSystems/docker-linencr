@@ -9,3 +9,4 @@ colormap
 easydev
 python-dateutil
 openpyxl
+pyyaml

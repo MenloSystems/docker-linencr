@@ -1,14 +1,14 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="/static/jquery.min.js" type="text/javascript"></script>
 
 <link rel="stylesheet" type="text/css" href="/static/basic.css" media="screen" />
 
 <style>
 #rectangle{
 	float: left;
-    width:80px;
-    height:80px;
+	width:80px;
+	height:80px;
 	margin: 0 20px 0 0;
-    background:${Gruppe['SpektrumsFarbe']};
+	background:${Gruppe['SpektrumsFarbe']};
 }
 
 
@@ -97,16 +97,7 @@
 	$("#Projektbezug_Gattung").trigger("change");
 	</script>
     </p>
-    <!-- <p>
-		<label for="Projektbezug"><span>Projektbezug</span></label>
-		<input type="text" id="Projektbezug" name="Projektbezug" placeholder="AU0815" required pattern="^(AU\d{5}( .+)?)$|^([06-9]\d{3})$|^-$" title="0xxx : Sonstiges
-6xxx : Kostenträger
-7xxx : Kostenträger
-9xxx : Externe Projekte
-8xxx : Interne Projekte
-AUxxxxx : Aufträge
-- : N/A">
-    </p> -->
+
     <p>
 		<label for="Baugruppe_Gattung"><span>betroffene Baugruppe</span></label>
 		<select name="Baugruppe_Gattung" id="Baugruppe_Gattung" style="width:250px" required>
@@ -130,11 +121,7 @@ Stammnummer + "_" + Version; mehrere Baugruppen durch Kommata getrennt (keine Le
 	$("#Baugruppe_Gattung").trigger("change");
 	</script>
     </p>
-<!--     <p>
-		<label for="Baugruppe"><span>betroffene Baugruppe (ERP)</span></label>
-		<input type="text" id="Baugruppe" name="Baugruppe" placeholder="654321_010"  required pattern="^([0-9]{6}_[0-9]{3}(,[0-9]{6}_[0-9]{3})*)|-$" title='In welcher Baugruppe ist das Problem aufgetreten? 
-Stammnummer + "_" + Version oder "-"; mehrere Baugruppen durch Kommata getrennt (keine Leerzeichen)'>
-    </p> -->
+
 </section>	
 <section>	
     <h2>Was?</h2>
@@ -152,14 +139,14 @@ Stammnummer + "_" + Version oder "-"; mehrere Baugruppen durch Kommata getrennt 
 	<label class="mehr_lesen" for="mehr_lesen_Details">Details angeben</label>
 		</p>
     <p>
-	
+
 		<script  type="text/javascript">
 		var FehlercodesErlaeuterungen;
 		$.getJSON("/static/Fehlercodes_Erlaeuterungen.json", 
 			function(data) {
 				FehlercodesErlaeuterungen = data;
 			}
-		);		
+		);
 		//$("#Fehler").change(function() {
 		function zeigeErlaeuterung(dasElement){
 		  schl = $(dasElement).val().split(":")[0];
@@ -185,7 +172,7 @@ Stammnummer + "_" + Version oder "-"; mehrere Baugruppen durch Kommata getrennt 
 		}
 		//});
 		$("#Fehler").trigger("change");
-		
+
 
 		</script>
 	
@@ -211,9 +198,9 @@ Stammnummer + "_" + Version oder "-"; mehrere Baugruppen durch Kommata getrennt 
 				zeigeErlaeuterung(this);
 			});
 			</script>
-			
+
 		</tal:loop>
-	
+
 		<script  type="text/javascript">
 		$("#FehlerGruppe").change(function() {
 			<tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
@@ -222,7 +209,7 @@ Stammnummer + "_" + Version oder "-"; mehrere Baugruppen durch Kommata getrennt 
 			$('#FehlercodesErlaeuterung').hide();
 			</tal:loop>
 
-			
+
 			  if (false) {
 			<tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
 			  } else if ($(this).val() == "${fehlergruppe['name']}") {
@@ -248,13 +235,13 @@ Bei Baugruppen bitte die übliche Notation mit xxxxxx_xxx verwenden.
 Falls nicht zutreffend: Bitte '-' eintragen.
 ">
     </p>
-	
-	
-</section>	
-<section>	
+
+
+</section>
+<section>
     <h2>Wie?</h2>
     <p>
-	
+
 		<label for="Zeit"><span>Stoppzeit (h)</span></label>
 		<input type="number" id="Zeit" name="Zeit" step="any" min="0" placeholder="2,75" oninput="check(this)" required title="Wartezeit in Stunden, bis die Aufgabe fortgesetzt werden konnte.">
 		<script>
@@ -266,10 +253,10 @@ Falls nicht zutreffend: Bitte '-' eintragen.
 			 input.setCustomValidity('');
 		   }
 		 }
-		</script>	
+		</script>
     </p>
     <p>
-	
+
 		<label for="Verursacht_Gattung"><span>Verursacht durch</span></label>
 		<select name="Verursacht_Gattung" id="Verursacht_Gattung" style="width:200px" required>
 			<option hidden disabled selected value> -- Bitte auswählen -- </option>
@@ -286,7 +273,7 @@ Falls nicht zutreffend: Bitte '-' eintragen.
 		</select> 
 		<input type="text" id="Verursacht_Kreditor" name="Verursacht_Kreditor" placeholder="70028" style="width:200px", pattern="^7[0-9]{4}$" title="'7xxxx' : Kreditor, siehe AX"> 
 		<input type="text" id="Verursacht_Hersteller" name="Verursacht_Hersteller" placeholder="Samsung" style="width:200px" pattern="^(.+|unbekannt)$" title="Name des Herstellers oder 'unbekannt'"> 
-		
+
 	<script  type="text/javascript">
 	$("#Verursacht_Gattung").change(function() {
 		$('#Verursacht_Gruppe').hide();
@@ -310,12 +297,11 @@ Falls nicht zutreffend: Bitte '-' eintragen.
 	$("#Verursacht_Gattung").trigger("change");
 	</script>
     </p>
-</section>	
-
+</section>
 
 
 <section>
-	<h2>Meldung</h2>	
+	<h2>Meldung</h2>
 	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Optionen">
 	<span class="volltext">
 
@@ -332,55 +318,9 @@ Falls nicht zutreffend: Bitte '-' eintragen.
 	<input type="hidden" name="Gruppe" value="${Gruppe['id']}">
 	<p> <button type="submit" name="submit">Meldung abschicken</button> </p>
  </section>   
-	
-<!-- <section style="filter: blur(1.5px);">
-    <h2>Test</h2>
-	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_lesbarkeit">
-	<span class="volltext">
-		<p>
-		
-			<label for="Verursacht"><span>Verursacht durch</span></label>
-			<input type="text" id="Verursacht durch" name="Verursacht" placeholder="Kreditor:70028">
-		
-		
-		</p>
-	</span>
-	<label class="mehr_lesen" for="mehr_lesen_lesbarkeit"> einblenden...</label>
-	
-</section>		
- -->	
+
 </form>
 
-<!-- <span style="text-decoration: line-through;">Meldende Gruppe</span><br>
-Produktgruppe<br>
-<span style="text-decoration: line-through;">Verursacht durch</span><br>
- -->
-<!-- <h2>Offene Fragen</h2>
-<ul>
-<li> Namenskürzel-Dropdown/anonym? </li>
-<li> Falls anonym: als welcher Benutzer? Verantwortlicher Linemanager <b>oder</b> zu Erstellender Pseudobenutzer der Produktionslinie <b>oder</b> Admin? </li>
-<li> Woher die Produktgruppen-Information? Ist die überhaupt wichtig? </li>
-<li> <span style="text-decoration: line-through;">"Verursacht durch": Hilft eigentlich bei der Auswertung! Lösung durch Dropdown: ("Gruppe/"Kreditor"/"Hersteller") + Feld für Bezeichnung</span> </li>
-<li> <b>Neue Kategorien:</b>
-	<ul>
-	<li> 06.1:Arbeitsmittel:Gerät/Werkzeug besetzt </li>
-	<li> 06.2:Arbeitsmittel:Gerät/Werkzeug nicht auffindbar </li>
-	<li> 06.3:Arbeitsmittel:Gerät/Werkzeug defekt </li>
-	<li> 07.2.1:Produktionsergebnis: zusätzlicher Aufwand nach Fehleinschätzung </li>
-	<li> 07.2.2:Produktionsergebnis: zusätzlicher Aufwand, höher als üblich </li>
-	<li> 09.1:Organisation:Vorgesehene Arbeitskraft nicht verfügbar </li>
-	</ul>
 
- </li>
-<li> <b>Umbenennungen:</b>
-	<ul>
-	<li> "defektes Bauteil" -> "betroffene Bauteile" </li>
-	<li> "Problem bereits gelöst" -> "nachträgliche Dokumentation"  ???</li>
-	<li> "Problemlösung erforderlich" -> "interner Reparaturauftrag"  ???</li>
-	</ul>
- </li>
-
-</ul>
- -->
 </div>
 
