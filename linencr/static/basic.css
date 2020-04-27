@@ -1,11 +1,11 @@
 body{
-font-family:verdana, sans-serif;
-background-color: #eee;
+    font-family:verdana, sans-serif;
+    background-color: #eee;
 }
 
 #titel {
-width: 100%;
-border-bottom: 1px solid black;
+    width: 100%;
+    border-bottom: 1px solid black;
 }
 
 #logo{
@@ -21,7 +21,6 @@ border-bottom: 1px solid black;
     margin: 0 20px 0 0;
     background:#eee;
 }
-
 
 form:ul {
     margin: 0;
@@ -84,13 +83,13 @@ input[type=checkbox], input[type=radio] {
 }
 
 select:invalid,  input:invalid {
-  border: 1px dashed red;
-  background-color: #fff1f1;
+    border: 1px dashed red;
+    background-color: #fff1f1;
 }
 
 select:valid, input:valid {
-  border: 2px solid green;
-  background-color: #f1fff1;
+    border: 2px solid green;
+    background-color: #f1fff1;
 }
 
 input:focus, textarea:focus {
@@ -99,7 +98,6 @@ input:focus, textarea:focus {
 
 textarea {
     vertical-align: top;
-    //height: 5em;
     resize: vertical;
 }
 
@@ -115,15 +113,15 @@ button {
 }
 
 label {
-  position: relative;
+    position: relative;
 }
 
 label em {
-  position: absolute;
-  right: 5px;
-  top: 20px;
+    position: absolute;
+    right: 5px;
+    top: 20px;
 }
 
 ::placeholder {
-  color: #ccc;
+    color: #ccc;
 }

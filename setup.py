@@ -11,7 +11,6 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 with open(os.path.join(here, 'requirements.txt')) as f:
     requires = f.read().strip().splitlines()
 
-
 tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest >= 3.7.4',

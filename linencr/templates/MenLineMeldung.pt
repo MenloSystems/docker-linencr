@@ -3,19 +3,14 @@
 <link rel="stylesheet" type="text/css" href="${request.static_url('linencr:static/basic.css')}" media="screen" />
 
 <style>
-#rectangle{
-    float: left;
-    width:80px;
-    height:80px;
-    margin: 0 20px 0 0;
-    background:${Gruppe['SpektrumsFarbe']};
-}
+    #rectangle{
+        float: left;
+        width:80px;
+        height:80px;
+        margin: 0 20px 0 0;
+        background:${Gruppe['SpektrumsFarbe']};
+    }
 
-
-</style>
-
-
-<style>
     /* allgemeines */
     input.hackbox {
       display:none;
@@ -54,15 +49,9 @@
 <b>Störungsmeldung (NCR)</b>
 <h1>${Gruppe['name']}</h1>
 </div>
+
 <div>
-
-
-
-
 <form method="post" action="${request.route_path('MenLineMeldungFertig',Linie=Gruppe['id'])}">
-<!--
-<form method="post" action="/${Gruppe['id']}/meldungfertig">
--->
 <section>
     <h2>Wo?</h2>
     <p>
@@ -124,18 +113,17 @@ Stammnummer + "_" + Version; mehrere Baugruppen durch Kommata getrennt (keine Le
     $("#Baugruppe_Gattung").trigger("change");
     </script>
     </p>
-
 </section>    
+
 <section>    
     <h2>Was?</h2>
     <p>
         <label for="Thema"><span>Thema/Kurzbeschreibung</span></label>
         <input type="text" id="Thema" name="Thema" placeholder="Getaperter PM-Spleiß misslungen" required>
     </p>
-        <p>
+    <p>
     <input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Details">
     <span class="volltext">
-        
             <label for="Beschreibung"><span>Details/ausführliche Beschreibung</span></label>
             <textarea onfocus="this.rows=10;" rows="2" cols="50" name="Beschreibung" id="Beschreibung" placeholder="Führt man den Spleiß nach Aufbauanleitung aus, ist die Dämpfung oft > 7 dB. Heute waren 3 Versuche notwendig."></textarea>
     </span>
@@ -175,8 +163,6 @@ Stammnummer + "_" + Version; mehrere Baugruppen durch Kommata getrennt (keine Le
         }
         //});
         $("#Fehler").trigger("change");
-
-
         </script>
     
         <label for="FehlerGruppe"><span>Problem-Kategorie</span></label>
@@ -226,9 +212,6 @@ Stammnummer + "_" + Version; mehrere Baugruppen durch Kommata getrennt (keine Le
         </script>
 
         <div id="FehlercodesErlaeuterung"></div>
-
-
-
     </p>
     <p>
         <label for="Bauteil"><span>betroffene Bauteile (ERP)</span></label>
@@ -238,13 +221,11 @@ Bei Baugruppen bitte die übliche Notation mit xxxxxx_xxx verwenden.
 Falls nicht zutreffend: Bitte '-' eintragen.
 ">
     </p>
-
-
 </section>
+
 <section>
     <h2>Wie?</h2>
     <p>
-
         <label for="Zeit"><span>Stoppzeit (h)</span></label>
         <input type="number" id="Zeit" name="Zeit" step="any" min="0" placeholder="2,75" oninput="check(this)" required title="Wartezeit in Stunden, bis die Aufgabe fortgesetzt werden konnte.">
         <script>
@@ -259,7 +240,6 @@ Falls nicht zutreffend: Bitte '-' eintragen.
         </script>
     </p>
     <p>
-
         <label for="Verursacht_Gattung"><span>Verursacht durch</span></label>
         <select name="Verursacht_Gattung" id="Verursacht_Gattung" style="width:200px" required>
             <option hidden disabled selected value> -- Bitte auswählen -- </option>
@@ -302,7 +282,6 @@ Falls nicht zutreffend: Bitte '-' eintragen.
     </p>
 </section>
 
-
 <section>
     <h2>Meldung</h2>
     <input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Optionen">
@@ -320,10 +299,6 @@ Falls nicht zutreffend: Bitte '-' eintragen.
     <label class="mehr_lesen" for="mehr_lesen_Optionen">NCR Optionen</label>
     <input type="hidden" name="Gruppe" value="${Gruppe['id']}">
     <p> <button type="submit" name="submit">Meldung abschicken</button> </p>
- </section>  
-
+</section>  
 </form>
-
-
 </div>
-

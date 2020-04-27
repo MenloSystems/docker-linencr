@@ -2,21 +2,12 @@
 
 <link rel="stylesheet" type="text/css" href="${request.static_url('linencr:static/basic.css')}" media="screen" />
 
-
 <style>
+    #titel {
+        width: 100%;
+        background-color: ${Gruppe['farbe']};
+    }
 
-
-#titel {
-    width: 100%;
-    background-color: ${Gruppe['farbe']};
-}
-
-
-</style>
-
-
-
-<style>
     /* allgemeines */
     input.hackbox {
       display:none;
@@ -48,7 +39,6 @@
     }
 </style>
 
-
 <div id="titel">
 <b>Meldung eines nicht konformes Ereignisses (NCR)</b>
 <h1>${Gruppe['name']}</h1>
@@ -58,26 +48,14 @@
 
 <h2>Die Meldung wurde eingetragen.</h2>
 <br>
-Die NCR-Ticket-Nummer ist <a href="<redacted>/issues/${NCRID}" target="_blank">#${NCRID}</a>.
-<br>
 Die NCR-Ticket-Nummer ist <a href="${request.route_url('Ticket',NCRID=NCRID)}" target="_blank">#${NCRID}</a>.
 <br>
 Dort können Ergänzugen und Korrekturen vorgenommen werden.
 <br>
-
 <br>
 <br>
-<!--
-<a href="/">Startseite</a>
--->
 <a href="${request.route_path('home')}">Startseite</a>
 <br>
 <br>
-<!--
-<a href="/${Gruppe['id']}/meldung">Neue Meldung</a>
--->
 <a href="${request.route_path('MenLineMeldung',Linie=Gruppe['id'])}">Neue Meldung</a>
-
-
 </div>
-
