@@ -17,13 +17,13 @@ from pyramid.httpexceptions import (
     HTTPNotFound
 )
 
-from ..config import Config as config
+from ..config import Config
 
-project_id = config['project_id']
+project_id = Config['project_id']
 
 MenRedmine = Redmine(
-    config['url'],
-    username=config['username'], password=config['password'],
+    Config['private_url'],
+    username=Config['username'], password=Config['password'],
     requests={'verify': False}
 )
 
@@ -197,7 +197,7 @@ def my_view_testpage2(request):
         if True:
 
             issue = MenRedmine.issue.new()
-            issue.project_id = config['project_id']
+            issue.project_id = Config['project_id']
             issue.tracker_id = tracker_id
             issue.subject = Thema
             issue.description = Beschreibung
@@ -227,7 +227,7 @@ def my_view_testpage2(request):
     # Antwortseite:
     gruppe.update({'farbe': colorhash.ColorHash(gruppe['name'], lightness=(0.85, 0.9, 0.95), saturation=(0.25, 0.35, 0.5, 0.65, 0.75)).hex})
 
-    return {'Gruppe': gruppe, 'NCRID': ncrid, 'RedmineBaseURL': config['url']}
+    return {'Gruppe': gruppe, 'NCRID': ncrid, 'RedmineBaseURL': Config['private_url']}
 
 
 #########################################################################################
@@ -275,7 +275,7 @@ def my_view_testpage(request):
 @view_config(route_name='Rohdaten', renderer='csv')
 def Rohdaten(request):
     project_id = 'e-bu-ncr-tracker'
-    project_id = config['project_id']
+    project_id = Config['project_id']
     StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
     StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
 
@@ -327,7 +327,7 @@ def Rohdaten(request):
 @view_config(route_name='RohdatenExcel', renderer='xlsx')
 def Rohdaten2(request):
     project_id = 'e-bu-ncr-tracker'
-    project_id = config['project_id']
+    project_id = Config['project_id']
     StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
     StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
 
