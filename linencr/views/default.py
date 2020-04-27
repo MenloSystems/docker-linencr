@@ -6,8 +6,6 @@ import random
 import collections
 import colorhash
 import colormap
-import sys
-import yaml
 import traceback
 import datetime
 import math
@@ -19,16 +17,7 @@ from pyramid.httpexceptions import (
     HTTPNotFound
 )
 
-
-try:
-    with open('localdata/config.yml') as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-        print(config)
-except yaml.YAMLError as exc:
-    print(("Error in configuration file:", exc))
-    print("Fatal.")
-    sys.exit()
-
+from ..config import Config as config
 
 project_id = config['project_id']
 
