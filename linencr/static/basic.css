@@ -5,20 +5,20 @@ background-color: #eee;
 
 #titel {
 width: 100%;
-border-bottom: 1px solid black; 
+border-bottom: 1px solid black;
 }
 
 #logo{
-	float: right;
+    float: right;
     height:80px;
-	margin: 0 0 0 20px;
+    margin: 0 0 0 20px;
 }
 
 #rectangle{
-	float: left;
+    float: left;
     width:80px;
     height:80px;
-	margin: 0 20px 0 0;
+    margin: 0 20px 0 0;
     background:#eee;
 }
 
@@ -35,7 +35,7 @@ form {
     padding: 1em;
     border: 1px solid #CCC;
     border-radius: 1em;
-	background-color: white;
+    background-color: white;
 }
 
 div+div {
@@ -43,12 +43,12 @@ div+div {
 }
 
 form p {
-	margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 #FehlercodesErlaeuterung {
     margin-left: 200px;
-	font-size: 80%;
+    font-size: 80%;
 }
 #FehlercodesErlaeuterung ul{
     margin: 0px 0;
@@ -71,8 +71,8 @@ input, textarea, select {
 }
 
 select.ZweiteReihe {
-	margin-top:5px;
-	margin-left:203px;
+    margin-top:5px;
+    margin-left:203px;
 }
 
 select option{

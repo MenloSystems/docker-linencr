@@ -18,7 +18,7 @@
 
 <ul>
 <tal:loop tal:repeat="gruppe Gruppen">
-	<li style="color:${gruppe['SpektrumsFarbe']}; list-style-type: square;"><a href="${request.route_path('MenLineMeldung',Linie=gruppe['id'])}">${gruppe['name']}</a></li>
+    <li style="color:${gruppe['SpektrumsFarbe']}; list-style-type: square;"><a href="${request.route_path('MenLineMeldung',Linie=gruppe['id'])}">${gruppe['name']}</a></li>
 </tal:loop>
 </ul>
 
@@ -26,10 +26,10 @@
 
 <ul>
 <tal:loop tal:repeat="quartal Quartale">
-	<li>Rohdaten ${quartal['Jahr']}/Q${quartal['Quartal']}:
-		<a href="${request.route_path('Rohdaten',StartJahr=quartal['q_StartJahr'],StartMonat=quartal['q_StartMonat'],StartTag=quartal['q_StartTag'],StoppJahr=quartal['q_StoppJahr'],StoppMonat=quartal['q_StoppMonat'],StoppTag=quartal['q_StoppTag'])}">csv</a>
-		|
-		<a href="${request.route_path('RohdatenExcel',StartJahr=quartal['q_StartJahr'],StartMonat=quartal['q_StartMonat'],StartTag=quartal['q_StartTag'],StoppJahr=quartal['q_StoppJahr'],StoppMonat=quartal['q_StoppMonat'],StoppTag=quartal['q_StoppTag'])}">xsls</a>
+    <li>Rohdaten ${quartal['Jahr']}/Q${quartal['Quartal']}:
+        <a href="${request.route_path('Rohdaten',StartJahr=quartal['q_StartJahr'],StartMonat=quartal['q_StartMonat'],StartTag=quartal['q_StartTag'],StoppJahr=quartal['q_StoppJahr'],StoppMonat=quartal['q_StoppMonat'],StoppTag=quartal['q_StoppTag'])}">csv</a>
+        |
+        <a href="${request.route_path('RohdatenExcel',StartJahr=quartal['q_StartJahr'],StartMonat=quartal['q_StartMonat'],StartTag=quartal['q_StartTag'],StoppJahr=quartal['q_StoppJahr'],StoppMonat=quartal['q_StoppMonat'],StoppTag=quartal['q_StoppTag'])}">xsls</a>
 </tal:loop>
 </ul>
 

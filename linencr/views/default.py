@@ -15,44 +15,44 @@ import math
 from dateutil.relativedelta import relativedelta
 
 from pyramid.httpexceptions import (
-	HTTPMovedPermanently,
-	HTTPNotFound
+    HTTPMovedPermanently,
+    HTTPNotFound
 )
 
 
 try:
-	with open('localdata/config.yml') as f:
-		config = yaml.load(f, Loader=yaml.FullLoader)
-		print(config)
+    with open('localdata/config.yml') as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+        print(config)
 except yaml.YAMLError as exc:
-	print(("Error in configuration file:", exc))
-	print("Fatal.")
-	sys.exit()
+    print(("Error in configuration file:", exc))
+    print("Fatal.")
+    sys.exit()
 
 
 project_id = config['project_id']
 
 MenRedmine = Redmine(
-	config['url'],
-	username=config['username'], password=config['password'],
-	requests={'verify': False}
+    config['url'],
+    username=config['username'], password=config['password'],
+    requests={'verify': False}
 )
 
 custom_fields = []
 for cf in MenRedmine.custom_field.all():
-	if cf.customized_type == 'issue':
+    if cf.customized_type == 'issue':
 
-		pvs = []
-		if hasattr(cf, 'possible_values'):
-			pvs = cf['possible_values']
+        pvs = []
+        if hasattr(cf, 'possible_values'):
+            pvs = cf['possible_values']
 
-		custom_fields.append(
-			{'id': cf['id'], 'name': cf['name'], 'possible_values': pvs}
-		)
+        custom_fields.append(
+            {'id': cf['id'], 'name': cf['name'], 'possible_values': pvs}
+        )
 
 
 trackers = [
-	{'id': t['id'], 'name': t['name']} for t in MenRedmine.tracker.all()
+    {'id': t['id'], 'name': t['name']} for t in MenRedmine.tracker.all()
 ]
 
 tracker_Doku = next(item for item in trackers if item["name"] == "Problem bereits gelöst")
@@ -70,50 +70,50 @@ Feld_Produktgruppe = next(item for item in custom_fields if item["name"] == "Pro
 
 
 def holeGrupen():
-	print("holeGrupen...")
+    print("holeGrupen...")
 
-	lis = [
-		{'name': b, 'id': a, 'nameOrig': ":".join([a, b])}
-		for a, b in (x['value'].split(":") for x in MenRedmine.custom_field.get(4).possible_values)
-	]
-	lis = sorted(lis, key=lambda i: int(i['id']))
+    lis = [
+        {'name': b, 'id': a, 'nameOrig': ":".join([a, b])}
+        for a, b in (x['value'].split(":") for x in MenRedmine.custom_field.get(4).possible_values)
+    ]
+    lis = sorted(lis, key=lambda i: int(i['id']))
 
-	for h in range(len(lis)):
-		lis[h]['SpektrumsFarbe'] = colormap.Color(hsv=(0.90 * h / len(lis), 1, 1)).hex
-	return lis
+    for h in range(len(lis)):
+        lis[h]['SpektrumsFarbe'] = colormap.Color(hsv=(0.90 * h / len(lis), 1, 1)).hex
+    return lis
 
 
 #########################################################################################
 
 
 def Quartale():
-	d = datetime.date(datetime.date.today().year + 1, 1, 1)
-	d_stop = datetime.date(2015, 1, 1)
-	day = relativedelta(days=1)
-	quarter = relativedelta(months=3)
-	ret = []
-	while d > d_stop:
-		q_erster = d - quarter
-		q_letzter = d - day
-		ret.append(
-			{
-				"q_erster": q_erster,
-				"q_erster_str": q_erster.strftime('%Y-%m-%d'),
-				"q_StartJahr": q_erster.strftime('%Y'),
-				"q_StartMonat": q_erster.strftime('%m'),
-				"q_StartTag": q_erster.strftime('%d'),
-				"q_StoppJahr": q_letzter.strftime('%Y'),
-				"q_StoppMonat": q_letzter.strftime('%m'),
-				"q_StoppTag": q_letzter.strftime('%d'),
-				"q_letzter": q_letzter,
-				"q_letzter_str": q_letzter.strftime('%Y-%m-%d'),
-				#~ 'Quartal': int(math.ceil(q_erster.month / 3) + 1),
-				'Quartal': int(math.ceil(q_erster.month / 3) + 0),
-				'Jahr': q_erster.year
-			}
-		)
-		d -= quarter
-	return ret
+    d = datetime.date(datetime.date.today().year + 1, 1, 1)
+    d_stop = datetime.date(2015, 1, 1)
+    day = relativedelta(days=1)
+    quarter = relativedelta(months=3)
+    ret = []
+    while d > d_stop:
+        q_erster = d - quarter
+        q_letzter = d - day
+        ret.append(
+            {
+                "q_erster": q_erster,
+                "q_erster_str": q_erster.strftime('%Y-%m-%d'),
+                "q_StartJahr": q_erster.strftime('%Y'),
+                "q_StartMonat": q_erster.strftime('%m'),
+                "q_StartTag": q_erster.strftime('%d'),
+                "q_StoppJahr": q_letzter.strftime('%Y'),
+                "q_StoppMonat": q_letzter.strftime('%m'),
+                "q_StoppTag": q_letzter.strftime('%d'),
+                "q_letzter": q_letzter,
+                "q_letzter_str": q_letzter.strftime('%Y-%m-%d'),
+                #~ 'Quartal': int(math.ceil(q_erster.month / 3) + 1),
+                'Quartal': int(math.ceil(q_erster.month / 3) + 0),
+                'Jahr': q_erster.year
+            }
+        )
+        d -= quarter
+    return ret
 
 #########################################################################################
 #########################################################################################
@@ -133,10 +133,10 @@ print(Gewichte)
 
 @view_config(route_name='home', renderer='../templates/Start.pt')
 def my_view(request):
-	Gruppen = holeGrupen()
-	Qs = Quartale()
+    Gruppen = holeGrupen()
+    Qs = Quartale()
 
-	return {'Gruppen': Gruppen, 'Quartale': Qs}
+    return {'Gruppen': Gruppen, 'Quartale': Qs}
 
 
 #########################################################################################
@@ -145,100 +145,100 @@ def my_view(request):
 
 @view_config(route_name='MenLineMeldungFertig', renderer='../templates/MenLineMeldungFertig.pt')
 def my_view_testpage2(request):
-	Gruppen = holeGrupen()
-	try:
-		gruppe = next(item for item in Gruppen if item["id"] == request.matchdict['Linie'])
-	except:
-		return HTTPNotFound("Die Gruppen-ID '{}' ist ungültig.".format(request.matchdict['Linie']))
+    Gruppen = holeGrupen()
+    try:
+        gruppe = next(item for item in Gruppen if item["id"] == request.matchdict['Linie'])
+    except:
+        return HTTPNotFound("Die Gruppen-ID '{}' ist ungültig.".format(request.matchdict['Linie']))
 
-	# in Redmine Ticket anlegen:
+    # in Redmine Ticket anlegen:
 
-	Projektbezug_Gattung = request.params['Projektbezug_Gattung']
-	Projektbezug_AU = request.params['Projektbezug_AU']
-	Projektbezug_PA = request.params['Projektbezug_PA']
-	Projektbezug_Projekt = request.params['Projektbezug_Projekt']
-	pData = {'KanBan': Projektbezug_PA, 'AU': Projektbezug_AU, 'Projekt': Projektbezug_Projekt}
-	pTemp = {'KanBan': "{KanBan}", 'AU': "{AU}", 'Projekt': "{Projekt}", 'NA': "-"}
-	Projektbezug = pTemp[Projektbezug_Gattung].format(**pData)
-	Baugruppe_Gattung = request.params['Baugruppe_Gattung']
-	Baugruppe_Baugruppe = request.params['Baugruppe_Baugruppe']
-	bData = {'Baugruppe': Baugruppe_Baugruppe}
-	bTemp = {'Baugruppe': "{Baugruppe}", 'unbekannt': "-"}
-	Baugruppen = bTemp[Baugruppe_Gattung].format(**bData)
-	FehlerGruppe = request.params['FehlerGruppe']
-	Fehler = request.params[FehlerGruppe]
-	Thema = request.params['Thema']
-	Beschreibung = request.params['Beschreibung']
-	if Beschreibung == "":
-		Beschreibung = "Auf die Beschreibung wurde verzichtet."
-	Bauteil = request.params['Bauteil']
-	if Bauteil == "-":
-		Bauteil = ""
-	Zeit = float(request.params['Zeit'])
-	Reparaturauftrag = 'Reparaturauftrag' in request.params
-	Sonderfreigabe = 'Sonderfreigabe' in request.params
-	Verursacht_Gattung = request.params['Verursacht_Gattung']
-	if "Verursacht_Gruppe" in request.params:
-		Verursacht_Gruppe = request.params['Verursacht_Gruppe']
-	else:
-		Verursacht_Gruppe = None
-	Verursacht_Kreditor = request.params['Verursacht_Kreditor']
-	Verursacht_Hersteller = request.params['Verursacht_Hersteller']
+    Projektbezug_Gattung = request.params['Projektbezug_Gattung']
+    Projektbezug_AU = request.params['Projektbezug_AU']
+    Projektbezug_PA = request.params['Projektbezug_PA']
+    Projektbezug_Projekt = request.params['Projektbezug_Projekt']
+    pData = {'KanBan': Projektbezug_PA, 'AU': Projektbezug_AU, 'Projekt': Projektbezug_Projekt}
+    pTemp = {'KanBan': "{KanBan}", 'AU': "{AU}", 'Projekt': "{Projekt}", 'NA': "-"}
+    Projektbezug = pTemp[Projektbezug_Gattung].format(**pData)
+    Baugruppe_Gattung = request.params['Baugruppe_Gattung']
+    Baugruppe_Baugruppe = request.params['Baugruppe_Baugruppe']
+    bData = {'Baugruppe': Baugruppe_Baugruppe}
+    bTemp = {'Baugruppe': "{Baugruppe}", 'unbekannt': "-"}
+    Baugruppen = bTemp[Baugruppe_Gattung].format(**bData)
+    FehlerGruppe = request.params['FehlerGruppe']
+    Fehler = request.params[FehlerGruppe]
+    Thema = request.params['Thema']
+    Beschreibung = request.params['Beschreibung']
+    if Beschreibung == "":
+        Beschreibung = "Auf die Beschreibung wurde verzichtet."
+    Bauteil = request.params['Bauteil']
+    if Bauteil == "-":
+        Bauteil = ""
+    Zeit = float(request.params['Zeit'])
+    Reparaturauftrag = 'Reparaturauftrag' in request.params
+    Sonderfreigabe = 'Sonderfreigabe' in request.params
+    Verursacht_Gattung = request.params['Verursacht_Gattung']
+    if "Verursacht_Gruppe" in request.params:
+        Verursacht_Gruppe = request.params['Verursacht_Gruppe']
+    else:
+        Verursacht_Gruppe = None
+    Verursacht_Kreditor = request.params['Verursacht_Kreditor']
+    Verursacht_Hersteller = request.params['Verursacht_Hersteller']
 
-	vData = {'Gruppe': Verursacht_Gruppe, 'Kreditor': Verursacht_Kreditor, 'Hersteller': Verursacht_Hersteller}
-	vTemp = {'Gruppe': "Gruppe:{Gruppe}", 'Kreditor': "Kreditor:{Kreditor}", 'Hersteller': "Hersteller:{Hersteller}", 'unbekannt': "unbekannt"}
-	VerursachtDurch = vTemp[Verursacht_Gattung].format(**vData)
+    vData = {'Gruppe': Verursacht_Gruppe, 'Kreditor': Verursacht_Kreditor, 'Hersteller': Verursacht_Hersteller}
+    vTemp = {'Gruppe': "Gruppe:{Gruppe}", 'Kreditor': "Kreditor:{Kreditor}", 'Hersteller': "Hersteller:{Hersteller}", 'unbekannt': "unbekannt"}
+    VerursachtDurch = vTemp[Verursacht_Gattung].format(**vData)
 
-	if Reparaturauftrag or Sonderfreigabe:
-		tracker_id = tracker_Reparatur['id']
-	else:
-		tracker_id = tracker_Doku['id']
+    if Reparaturauftrag or Sonderfreigabe:
+        tracker_id = tracker_Reparatur['id']
+    else:
+        tracker_id = tracker_Doku['id']
 
-	custom_fields = [
-		{'id': Feld_MeldendeGruppe['id'], 'value': gruppe['nameOrig']},
-		{'id': Feld_Fehler['id'], 'value': Fehler},
-		{'id': Feld_VerursachtDurch['id'], 'value': VerursachtDurch},
-		{'id': Feld_Projektbezug['id'], 'value': Projektbezug},
-		{'id': Feld_Baugruppe['id'], 'value': Baugruppen},
-		{'id': Feld_Bauteil['id'], 'value': Bauteil},
-		{'id': Feld_Produktgruppe['id'], 'value': "N/A"}
-	]
+    custom_fields = [
+        {'id': Feld_MeldendeGruppe['id'], 'value': gruppe['nameOrig']},
+        {'id': Feld_Fehler['id'], 'value': Fehler},
+        {'id': Feld_VerursachtDurch['id'], 'value': VerursachtDurch},
+        {'id': Feld_Projektbezug['id'], 'value': Projektbezug},
+        {'id': Feld_Baugruppe['id'], 'value': Baugruppen},
+        {'id': Feld_Bauteil['id'], 'value': Bauteil},
+        {'id': Feld_Produktgruppe['id'], 'value': "N/A"}
+    ]
 
-	try:
-		if True:
+    try:
+        if True:
 
-			issue = MenRedmine.issue.new()
-			issue.project_id = config['project_id']
-			issue.tracker_id = tracker_id
-			issue.subject = Thema
-			issue.description = Beschreibung
-			issue.custom_fields = custom_fields
-			if Sonderfreigabe:
-				issue.status_id = 8
+            issue = MenRedmine.issue.new()
+            issue.project_id = config['project_id']
+            issue.tracker_id = tracker_id
+            issue.subject = Thema
+            issue.description = Beschreibung
+            issue.custom_fields = custom_fields
+            if Sonderfreigabe:
+                issue.status_id = 8
 
-			issue.save()
-			ncrid = issue['id']
+            issue.save()
+            ncrid = issue['id']
 
-			if Sonderfreigabe:
-				MenRedmine.issue.update(ncrid, notes='Um Sonderfreigabe wird gebeten.\n\nZur Bewilligung das Feld *Status* von "Ungelöst" -> "Erledigt" setzen.')
+            if Sonderfreigabe:
+                MenRedmine.issue.update(ncrid, notes='Um Sonderfreigabe wird gebeten.\n\nZur Bewilligung das Feld *Status* von "Ungelöst" -> "Erledigt" setzen.')
 
-			time_entry = MenRedmine.time_entry.new()
-			time_entry.activity_id = 24  # "Lösung"
-			time_entry.issue_id = ncrid
-			time_entry.spent_on = datetime.date.today()
-			time_entry.hours = Zeit
-			time_entry.comments = 'aus Formular'
-			time_entry.save()
-		else:
-			ncrid = None
-	except:
-		print((traceback.format_exc()))
-		ncrid = None
+            time_entry = MenRedmine.time_entry.new()
+            time_entry.activity_id = 24  # "Lösung"
+            time_entry.issue_id = ncrid
+            time_entry.spent_on = datetime.date.today()
+            time_entry.hours = Zeit
+            time_entry.comments = 'aus Formular'
+            time_entry.save()
+        else:
+            ncrid = None
+    except:
+        print((traceback.format_exc()))
+        ncrid = None
 
-	# Antwortseite:
-	gruppe.update({'farbe': colorhash.ColorHash(gruppe['name'], lightness=(0.85, 0.9, 0.95), saturation=(0.25, 0.35, 0.5, 0.65, 0.75)).hex})
+    # Antwortseite:
+    gruppe.update({'farbe': colorhash.ColorHash(gruppe['name'], lightness=(0.85, 0.9, 0.95), saturation=(0.25, 0.35, 0.5, 0.65, 0.75)).hex})
 
-	return {'Gruppe': gruppe, 'NCRID': ncrid, 'RedmineBaseURL': config['url']}
+    return {'Gruppe': gruppe, 'NCRID': ncrid, 'RedmineBaseURL': config['url']}
 
 
 #########################################################################################
@@ -248,33 +248,33 @@ def my_view_testpage2(request):
 @view_config(route_name='MenLineMeldung', renderer='../templates/MenLineMeldung.pt')
 def my_view_testpage(request):
 
-	redmine_users = MenRedmine.user.all()
-	users = []
-	if False:
-		for user in list(redmine_users.values()):
-			users.append(user['firstname'])
+    redmine_users = MenRedmine.user.all()
+    users = []
+    if False:
+        for user in list(redmine_users.values()):
+            users.append(user['firstname'])
 
-	Fehlerursachen = [
-		{'name': x["value"], 'farbe':Fehlerursachenfarben[x["value"][0:2]], 'gewicht': Gewichte[x["value"][0:4]]}
-		for x in MenRedmine.custom_field.get(5).possible_values
-	]
+    Fehlerursachen = [
+        {'name': x["value"], 'farbe':Fehlerursachenfarben[x["value"][0:2]], 'gewicht': Gewichte[x["value"][0:4]]}
+        for x in MenRedmine.custom_field.get(5).possible_values
+    ]
 
-	FehlerursachenGruppen = [
-		{'txt': 'Information und Vorgehen', 'name': 'FehlerGruppe_Information_und_Vorgehen', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['01', '02']]},
-		{'txt': 'Herstellungsschritte und Lager', 'name': 'FehlerGruppe_Herstellungsschritte', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['03', '05', '06', '07']]},
-		{'txt': 'Defekte', 'name': 'FehlerGruppe_Defekte', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['04']]},
-		{'txt': 'Organisation und Sonstiges', 'name': 'FehlerGruppe_Organisation_und_Sonstiges', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['08', '09', '99']]},
-		{'txt': 'Alle', 'name': 'FehlerGruppe_Alle', 'Fehlerursachen': Fehlerursachen}
-	]
+    FehlerursachenGruppen = [
+        {'txt': 'Information und Vorgehen', 'name': 'FehlerGruppe_Information_und_Vorgehen', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['01', '02']]},
+        {'txt': 'Herstellungsschritte und Lager', 'name': 'FehlerGruppe_Herstellungsschritte', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['03', '05', '06', '07']]},
+        {'txt': 'Defekte', 'name': 'FehlerGruppe_Defekte', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['04']]},
+        {'txt': 'Organisation und Sonstiges', 'name': 'FehlerGruppe_Organisation_und_Sonstiges', 'Fehlerursachen': [x for x in Fehlerursachen if x["name"][0:2] in ['08', '09', '99']]},
+        {'txt': 'Alle', 'name': 'FehlerGruppe_Alle', 'Fehlerursachen': Fehlerursachen}
+    ]
 
-	Gruppen = holeGrupen()
-	try:
-		gruppe = next(item for item in Gruppen if item["id"] == request.matchdict['Linie'])
-	except:
-		return HTTPNotFound("Die Gruppen-ID '{}' ist ungültig.".format(request.matchdict['Linie']))
-	gruppe.update({'farbe': colorhash.ColorHash(gruppe['name'], lightness=(0.85, 0.9, 0.95), saturation=(0.25, 0.35, 0.5, 0.65, 0.75)).hex})
-	print(gruppe)
-	return {'Gruppe': gruppe, 'Gruppen': Gruppen, 'Nutzer': users, 'Fehlerursachen': Fehlerursachen, 'FehlerursachenGruppen': FehlerursachenGruppen}
+    Gruppen = holeGrupen()
+    try:
+        gruppe = next(item for item in Gruppen if item["id"] == request.matchdict['Linie'])
+    except:
+        return HTTPNotFound("Die Gruppen-ID '{}' ist ungültig.".format(request.matchdict['Linie']))
+    gruppe.update({'farbe': colorhash.ColorHash(gruppe['name'], lightness=(0.85, 0.9, 0.95), saturation=(0.25, 0.35, 0.5, 0.65, 0.75)).hex})
+    print(gruppe)
+    return {'Gruppe': gruppe, 'Gruppen': Gruppen, 'Nutzer': users, 'Fehlerursachen': Fehlerursachen, 'FehlerursachenGruppen': FehlerursachenGruppen}
 
 
 #########################################################################################
@@ -285,49 +285,49 @@ def my_view_testpage(request):
 
 @view_config(route_name='Rohdaten', renderer='csv')
 def Rohdaten(request):
-	project_id = 'e-bu-ncr-tracker'
-	project_id = config['project_id']
-	StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
-	StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
+    project_id = 'e-bu-ncr-tracker'
+    project_id = config['project_id']
+    StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
+    StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
 
-	issues = MenRedmine.issue.filter(project_id=project_id, created_on='><{}|{}'.format(StartDatumStr, StoppDatumStr), status_id="*")
-	x = ['author', 'created_on', 'description', 'id', 'project', 'status', 'subject', 'tracker', 'updated_on']
-	x = ['author', 'created_on', 'id', 'status', 'subject', 'tracker', 'updated_on']
+    issues = MenRedmine.issue.filter(project_id=project_id, created_on='><{}|{}'.format(StartDatumStr, StoppDatumStr), status_id="*")
+    x = ['author', 'created_on', 'description', 'id', 'project', 'status', 'subject', 'tracker', 'updated_on']
+    x = ['author', 'created_on', 'id', 'status', 'subject', 'tracker', 'updated_on']
 
-	rows = []
-	for issue in issues:
-		print((issue.url))
-		d = {k: "{}".format(issue[k]) for k in x}
-		if hasattr(issue, 'assigned_to'):
-				d['assigned_to'] = issue.assigned_to.id
-		if hasattr(issue, 'custom_fields'):
-			for cf in issue['custom_fields']:
-				d[cf.name] = "{}".format(cf.value)
-		total_duration = 0
-		#  Todo: Sobald eine neue Version vom RM verfügbar ist, issue."spent_hours" auswerten! Zusammenfassen mit excel (Q3.2020)
-		if hasattr(issue, 'time_entries'):
-			for time_entry in issue['time_entries']:
-				total_duration += time_entry.hours
-		d['total_duration'] = total_duration
-		print((d['id']))
-		print()
+    rows = []
+    for issue in issues:
+        print((issue.url))
+        d = {k: "{}".format(issue[k]) for k in x}
+        if hasattr(issue, 'assigned_to'):
+                d['assigned_to'] = issue.assigned_to.id
+        if hasattr(issue, 'custom_fields'):
+            for cf in issue['custom_fields']:
+                d[cf.name] = "{}".format(cf.value)
+        total_duration = 0
+        #  Todo: Sobald eine neue Version vom RM verfügbar ist, issue."spent_hours" auswerten! Zusammenfassen mit excel (Q3.2020)
+        if hasattr(issue, 'time_entries'):
+            for time_entry in issue['time_entries']:
+                total_duration += time_entry.hours
+        d['total_duration'] = total_duration
+        print((d['id']))
+        print()
 
-		if d['status'] != "Abgewiesen":
-			rows.append(d)
+        if d['status'] != "Abgewiesen":
+            rows.append(d)
 
-	if rows:
-		header = list(rows[0].keys())
-	else:
-		header = ['Info']
-		rows = [{'Info': "keine Daten verfügbar."}]
+    if rows:
+        header = list(rows[0].keys())
+    else:
+        header = ['Info']
+        rows = [{'Info': "keine Daten verfügbar."}]
 
-	filename = 'NCR-Ereignisse_{}_{}.csv'.format(StartDatumStr, StoppDatumStr)
-	request.response.content_disposition = 'attachment;filename=' + filename
+    filename = 'NCR-Ereignisse_{}_{}.csv'.format(StartDatumStr, StoppDatumStr)
+    request.response.content_disposition = 'attachment;filename=' + filename
 
-	return {
-		'header': header,
-		'rows': rows,
-	}
+    return {
+        'header': header,
+        'rows': rows,
+    }
 
 #########################################################################################
 #########################################################################################
@@ -337,46 +337,46 @@ def Rohdaten(request):
 
 @view_config(route_name='RohdatenExcel', renderer='xlsx')
 def Rohdaten2(request):
-	project_id = 'e-bu-ncr-tracker'
-	project_id = config['project_id']
-	StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
-	StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
+    project_id = 'e-bu-ncr-tracker'
+    project_id = config['project_id']
+    StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
+    StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
 
-	issues = MenRedmine.issue.filter(project_id=project_id, created_on='><{}|{}'.format(StartDatumStr, StoppDatumStr), status_id="*")
-	x = ['author', 'created_on', 'description', 'id', 'project', 'status', 'subject', 'tracker', 'updated_on']
-	x = ['author', 'created_on', 'id', 'status', 'subject', 'tracker', 'updated_on']
+    issues = MenRedmine.issue.filter(project_id=project_id, created_on='><{}|{}'.format(StartDatumStr, StoppDatumStr), status_id="*")
+    x = ['author', 'created_on', 'description', 'id', 'project', 'status', 'subject', 'tracker', 'updated_on']
+    x = ['author', 'created_on', 'id', 'status', 'subject', 'tracker', 'updated_on']
 
-	rows = []
-	for issue in issues:
-		print((issue.url))
-		d = {k: "{}".format(issue[k]) for k in x}
-		if hasattr(issue, 'assigned_to'):
-				d['assigned_to'] = issue.assigned_to.id
-		if hasattr(issue, 'custom_fields'):
-			for cf in issue['custom_fields']:
-				d[cf.name] = "{}".format(cf.value)
-		total_duration = 0
-		#  Todo: Sobald eine neue Version vom RM verfügbar ist, issue."spent_hours" auswerten! Zusammenfassen mit csv (Q3.2020)
-		if hasattr(issue, 'time_entries'):
-			for time_entry in issue['time_entries']:
-				total_duration += time_entry.hours
-		d['total_duration'] = total_duration
-		print((d['id']))
-		print()
+    rows = []
+    for issue in issues:
+        print((issue.url))
+        d = {k: "{}".format(issue[k]) for k in x}
+        if hasattr(issue, 'assigned_to'):
+                d['assigned_to'] = issue.assigned_to.id
+        if hasattr(issue, 'custom_fields'):
+            for cf in issue['custom_fields']:
+                d[cf.name] = "{}".format(cf.value)
+        total_duration = 0
+        #  Todo: Sobald eine neue Version vom RM verfügbar ist, issue."spent_hours" auswerten! Zusammenfassen mit csv (Q3.2020)
+        if hasattr(issue, 'time_entries'):
+            for time_entry in issue['time_entries']:
+                total_duration += time_entry.hours
+        d['total_duration'] = total_duration
+        print((d['id']))
+        print()
 
-		if d['status'] != "Abgewiesen":
-			rows.append(d)
+        if d['status'] != "Abgewiesen":
+            rows.append(d)
 
-	if rows:
-		header = list(rows[0].keys())
-	else:
-		header = ['Info']
-		rows = [{'Info': "keine Daten verfügbar."}]
+    if rows:
+        header = list(rows[0].keys())
+    else:
+        header = ['Info']
+        rows = [{'Info': "keine Daten verfügbar."}]
 
-	filename = 'NCR-Ereignisse_{}_{}.csv'.format(StartDatumStr, StoppDatumStr)
-	request.response.content_disposition = 'attachment;filename=' + filename
+    filename = 'NCR-Ereignisse_{}_{}.csv'.format(StartDatumStr, StoppDatumStr)
+    request.response.content_disposition = 'attachment;filename=' + filename
 
-	return {
-		'header': header,
-		'rows': rows,
-	}
+    return {
+        'header': header,
+        'rows': rows,
+    }

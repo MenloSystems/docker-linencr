@@ -4,11 +4,11 @@
 
 <style>
 #rectangle{
-	float: left;
-	width:80px;
-	height:80px;
-	margin: 0 20px 0 0;
-	background:${Gruppe['SpektrumsFarbe']};
+    float: left;
+    width:80px;
+    height:80px;
+    margin: 0 20px 0 0;
+    background:${Gruppe['SpektrumsFarbe']};
 }
 
 
@@ -16,35 +16,35 @@
 
 
 <style>
-	/* allgemeines */
-	input.hackbox {
-	  display:none;
-	}
-	 
-	/* default-Zustand */
-	span.volltext {
-	  display:none;
-	}
-	 
-	label.mehr_lesen {
-	  color:#0091D2;
-	  margin-left:200px;
-	}
-	 
-	label.mehr_lesen::before {
-	  content:"Einblenden: ";
-	  color:#0091D2;
-	}
-	 
-	/* bei gesetztem Haken */
-	input.mehr_lesen:checked ~ span.volltext {
-	  display:inline;
-	} 
-	 
-	input.mehr_lesen:checked ~ label.mehr_lesen::before {
-	  content:"Ausblenden: ";
-	  color:#0091D2;
-	}
+    /* allgemeines */
+    input.hackbox {
+      display:none;
+    }
+
+    /* default-Zustand */
+    span.volltext {
+      display:none;
+    }
+
+    label.mehr_lesen {
+      color:#0091D2;
+      margin-left:200px;
+    }
+
+    label.mehr_lesen::before {
+      content:"Einblenden: ";
+      color:#0091D2;
+    }
+
+    /* bei gesetztem Haken */
+    input.mehr_lesen:checked ~ span.volltext {
+      display:inline;
+    }
+
+    input.mehr_lesen:checked ~ label.mehr_lesen::before {
+      content:"Ausblenden: ";
+      color:#0091D2;
+    }
 </style>
 
 
@@ -66,174 +66,174 @@
 <section>
     <h2>Wo?</h2>
     <p>
-		<label for="Projektbezug_Gattung"><span>Projektbezug</span></label>
-		<select name="Projektbezug_Gattung" id="Projektbezug_Gattung" style="width:250px" required>
-			<option hidden disabled selected value> -- Bitte auswählen -- </option>
-				<option value="KanBan">Supermarkt / KanBan / auf Lager</option>
-				<option value="AU">AU</option>
-				<option value="Projekt">Projekt</option>
-				<option value="NA">N/A</option>
-		</select> 
-		<input type="text" id="Projektbezug_PA" name="Projektbezug_PA" placeholder="PA012345" style="width:150px", pattern="^PA\d{5}$" title="'PAxxxxx' : PA, siehe AX"> 
-		<input type="text" id="Projektbezug_AU" name="Projektbezug_AU" placeholder="AU012345" style="width:150px" pattern="^AU\d{5}$" title="'AUxxxxx' : AU, siehe AX"> 
-		<input type="text" id="Projektbezug_Projekt" name="Projektbezug_Projekt" placeholder="9510" style="width:150px" pattern="^[06-9]\d{3}$" title="'Xxxx': Projektnummer"> 
-	<script  type="text/javascript">
-	$("#Projektbezug_Gattung").change(function() {
-		$('#Projektbezug_PA').hide();
-		$('#Projektbezug_PA').prop('required',false);
-		$('#Projektbezug_AU').hide();
-		$('#Projektbezug_AU').prop('required',false);
-		$('#Projektbezug_Projekt').hide();
-		$('#Projektbezug_Projekt').prop('required',false);
-	  if ($(this).val() == "AU") {
-		$('#Projektbezug_AU').show();
-		$('#Projektbezug_AU').prop('required',true);
-	  } else if ($(this).val() == "KanBan") {
-		$('#Projektbezug_PA').show();
-		$('#Projektbezug_PA').prop('required',true);
-	  } else if ($(this).val() == "Projekt") {
-		$('#Projektbezug_Projekt').show();
-		$('#Projektbezug_Projekt').prop('required',true);
-	  } else  {
-	  }
-	});
-	$("#Projektbezug_Gattung").trigger("change");
-	</script>
+        <label for="Projektbezug_Gattung"><span>Projektbezug</span></label>
+        <select name="Projektbezug_Gattung" id="Projektbezug_Gattung" style="width:250px" required>
+            <option hidden disabled selected value> -- Bitte auswählen -- </option>
+                <option value="KanBan">Supermarkt / KanBan / auf Lager</option>
+                <option value="AU">AU</option>
+                <option value="Projekt">Projekt</option>
+                <option value="NA">N/A</option>
+        </select>
+        <input type="text" id="Projektbezug_PA" name="Projektbezug_PA" placeholder="PA012345" style="width:150px", pattern="^PA\d{5}$" title="'PAxxxxx' : PA, siehe AX">
+        <input type="text" id="Projektbezug_AU" name="Projektbezug_AU" placeholder="AU012345" style="width:150px" pattern="^AU\d{5}$" title="'AUxxxxx' : AU, siehe AX">
+        <input type="text" id="Projektbezug_Projekt" name="Projektbezug_Projekt" placeholder="9510" style="width:150px" pattern="^[06-9]\d{3}$" title="'Xxxx': Projektnummer">
+    <script  type="text/javascript">
+    $("#Projektbezug_Gattung").change(function() {
+        $('#Projektbezug_PA').hide();
+        $('#Projektbezug_PA').prop('required',false);
+        $('#Projektbezug_AU').hide();
+        $('#Projektbezug_AU').prop('required',false);
+        $('#Projektbezug_Projekt').hide();
+        $('#Projektbezug_Projekt').prop('required',false);
+      if ($(this).val() == "AU") {
+        $('#Projektbezug_AU').show();
+        $('#Projektbezug_AU').prop('required',true);
+      } else if ($(this).val() == "KanBan") {
+        $('#Projektbezug_PA').show();
+        $('#Projektbezug_PA').prop('required',true);
+      } else if ($(this).val() == "Projekt") {
+        $('#Projektbezug_Projekt').show();
+        $('#Projektbezug_Projekt').prop('required',true);
+      } else  {
+      }
+    });
+    $("#Projektbezug_Gattung").trigger("change");
+    </script>
     </p>
 
     <p>
-		<label for="Baugruppe_Gattung"><span>betroffene Baugruppe</span></label>
-		<select name="Baugruppe_Gattung" id="Baugruppe_Gattung" style="width:250px" required>
-			<option hidden disabled selected value> -- Bitte auswählen -- </option>
-				<option value="Baugruppe">Baugruppe (ERP)</option>
-				<option value="unbekannt">N/A</option>
-		</select> 
-		<input type="text" id="Baugruppe_Baugruppe" name="Baugruppe_Baugruppe" placeholder="654321_010"  style="width:200px" pattern="^[0-9]{6}_[0-9]{3}(,[0-9]{6}_[0-9]{3})*$" title='In welcher Baugruppe ist das Problem aufgetreten? 
+        <label for="Baugruppe_Gattung"><span>betroffene Baugruppe</span></label>
+        <select name="Baugruppe_Gattung" id="Baugruppe_Gattung" style="width:250px" required>
+            <option hidden disabled selected value> -- Bitte auswählen -- </option>
+                <option value="Baugruppe">Baugruppe (ERP)</option>
+                <option value="unbekannt">N/A</option>
+        </select>
+        <input type="text" id="Baugruppe_Baugruppe" name="Baugruppe_Baugruppe" placeholder="654321_010"  style="width:200px" pattern="^[0-9]{6}_[0-9]{3}(,[0-9]{6}_[0-9]{3})*$" title='In welcher Baugruppe ist das Problem aufgetreten?
 Stammnummer + "_" + Version; mehrere Baugruppen durch Kommata getrennt (keine Leerzeichen)'>
-	<script  type="text/javascript">
-	$("#Baugruppe_Gattung").change(function() {
-		$('#Baugruppe_Baugruppe').hide();
-		$('#Baugruppe_Baugruppe').prop('required',false);
+    <script  type="text/javascript">
+    $("#Baugruppe_Gattung").change(function() {
+        $('#Baugruppe_Baugruppe').hide();
+        $('#Baugruppe_Baugruppe').prop('required',false);
 
-	  if ($(this).val() == "Baugruppe") {
-		$('#Baugruppe_Baugruppe').show();
-		$('#Baugruppe_Baugruppe').prop('required',true);
-	  } else  {
-	  }
-	});
-	$("#Baugruppe_Gattung").trigger("change");
-	</script>
+      if ($(this).val() == "Baugruppe") {
+        $('#Baugruppe_Baugruppe').show();
+        $('#Baugruppe_Baugruppe').prop('required',true);
+      } else  {
+      }
+    });
+    $("#Baugruppe_Gattung").trigger("change");
+    </script>
     </p>
 
-</section>	
-<section>	
+</section>    
+<section>    
     <h2>Was?</h2>
     <p>
-		<label for="Thema"><span>Thema/Kurzbeschreibung</span></label>
-		<input type="text" id="Thema" name="Thema" placeholder="Getaperter PM-Spleiß misslungen" required>
+        <label for="Thema"><span>Thema/Kurzbeschreibung</span></label>
+        <input type="text" id="Thema" name="Thema" placeholder="Getaperter PM-Spleiß misslungen" required>
     </p>
-		<p>
-	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Details">
-	<span class="volltext">
-		
-			<label for="Beschreibung"><span>Details/ausführliche Beschreibung</span></label>
-			<textarea onfocus="this.rows=10;" rows="2" cols="50" name="Beschreibung" id="Beschreibung" placeholder="Führt man den Spleiß nach Aufbauanleitung aus, ist die Dämpfung oft > 7 dB. Heute waren 3 Versuche notwendig."></textarea>
-	</span>
-	<label class="mehr_lesen" for="mehr_lesen_Details">Details angeben</label>
-		</p>
+        <p>
+    <input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Details">
+    <span class="volltext">
+        
+            <label for="Beschreibung"><span>Details/ausführliche Beschreibung</span></label>
+            <textarea onfocus="this.rows=10;" rows="2" cols="50" name="Beschreibung" id="Beschreibung" placeholder="Führt man den Spleiß nach Aufbauanleitung aus, ist die Dämpfung oft > 7 dB. Heute waren 3 Versuche notwendig."></textarea>
+    </span>
+    <label class="mehr_lesen" for="mehr_lesen_Details">Details angeben</label>
+        </p>
     <p>
 
-		<script  type="text/javascript">
-		var FehlercodesErlaeuterungen;
-		$.getJSON("${request.static_url('linencr:static/Fehlercodes_Erlaeuterungen.json')}", 
-			function(data) {
-				FehlercodesErlaeuterungen = data;
-			}
-		);
-		//$("#Fehler").change(function() {
-		function zeigeErlaeuterung(dasElement){
-		  schl = $(dasElement).val().split(":")[0];
-		  if(FehlercodesErlaeuterungen && schl in FehlercodesErlaeuterungen){
-			//alert(FehlercodesErlaeuterungen[schl]);
-			$('#FehlercodesErlaeuterung').show();
-			var Zeilen = FehlercodesErlaeuterungen[schl].split("\n")
-			var html = []
-			Zeilen.forEach(function(el){
-			  if(el.length>0)
-			    html.push('<li>' + el + '</li>');
-			});
-			//debugger;
-			if(html.length === 0){
-			  $('#FehlercodesErlaeuterung').hide();
-			  return;
-			}
-			html = html.join("");
-			$('#FehlercodesErlaeuterung').html("<b>Beispiele:</b><ul>"+html+"</ul>");
-		  }else{
-		    $('#FehlercodesErlaeuterung').hide();
-		  }
-		}
-		//});
-		$("#Fehler").trigger("change");
+        <script  type="text/javascript">
+        var FehlercodesErlaeuterungen;
+        $.getJSON("${request.static_url('linencr:static/Fehlercodes_Erlaeuterungen.json')}",
+            function(data) {
+                FehlercodesErlaeuterungen = data;
+            }
+        );
+        //$("#Fehler").change(function() {
+        function zeigeErlaeuterung(dasElement){
+          schl = $(dasElement).val().split(":")[0];
+          if(FehlercodesErlaeuterungen && schl in FehlercodesErlaeuterungen){
+            //alert(FehlercodesErlaeuterungen[schl]);
+            $('#FehlercodesErlaeuterung').show();
+            var Zeilen = FehlercodesErlaeuterungen[schl].split("\n")
+            var html = []
+            Zeilen.forEach(function(el){
+              if(el.length>0)
+                html.push('<li>' + el + '</li>');
+            });
+            //debugger;
+            if(html.length === 0){
+              $('#FehlercodesErlaeuterung').hide();
+              return;
+            }
+            html = html.join("");
+            $('#FehlercodesErlaeuterung').html("<b>Beispiele:</b><ul>"+html+"</ul>");
+          }else{
+            $('#FehlercodesErlaeuterung').hide();
+          }
+        }
+        //});
+        $("#Fehler").trigger("change");
 
 
-		</script>
-	
-		<label for="FehlerGruppe"><span>Problem-Kategorie</span></label>
+        </script>
+    
+        <label for="FehlerGruppe"><span>Problem-Kategorie</span></label>
 
-		<select name="FehlerGruppe" id="FehlerGruppe"  style="width:250px" required>
-			<option hidden disabled selected value> -- Bitte auswählen -- </option>
-			<tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
-				<option value="${fehlergruppe['name']}">${fehlergruppe['txt']}</option>
-			</tal:loop>
-		</select> 
+        <select name="FehlerGruppe" id="FehlerGruppe"  style="width:250px" required>
+            <option hidden disabled selected value> -- Bitte auswählen -- </option>
+            <tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
+                <option value="${fehlergruppe['name']}">${fehlergruppe['txt']}</option>
+            </tal:loop>
+        </select>
 
-		<tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
-			<select name="${fehlergruppe['name']}" id="${fehlergruppe['name']}" class="ZweiteReihe">
-				<option hidden disabled selected value> -- Bitte auswählen -- </option>
-				<tal:loop tal:repeat="fehler fehlergruppe['Fehlerursachen']">
-					<option value="${fehler['name']}" style="color:${fehler['farbe']}; font-weight:${fehler['gewicht']}">${fehler['name']}</option>
-				</tal:loop>
-			</select> 
-			
-			<script  type="text/javascript">
-			$("#${fehlergruppe['name']}").change(function() {
-				zeigeErlaeuterung(this);
-			});
-			</script>
+        <tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
+            <select name="${fehlergruppe['name']}" id="${fehlergruppe['name']}" class="ZweiteReihe">
+                <option hidden disabled selected value> -- Bitte auswählen -- </option>
+                <tal:loop tal:repeat="fehler fehlergruppe['Fehlerursachen']">
+                    <option value="${fehler['name']}" style="color:${fehler['farbe']}; font-weight:${fehler['gewicht']}">${fehler['name']}</option>
+                </tal:loop>
+            </select>
+            
+            <script  type="text/javascript">
+            $("#${fehlergruppe['name']}").change(function() {
+                zeigeErlaeuterung(this);
+            });
+            </script>
 
-		</tal:loop>
+        </tal:loop>
 
-		<script  type="text/javascript">
-		$("#FehlerGruppe").change(function() {
-			<tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
-			$('#${fehlergruppe['name']}').hide();
-			$('#${fehlergruppe['name']}').prop('required',false);
-			$('#FehlercodesErlaeuterung').hide();
-			</tal:loop>
-
-
-			  if (false) {
-			<tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
-			  } else if ($(this).val() == "${fehlergruppe['name']}") {
-				$('#${fehlergruppe['name']}').show();
-				$('#${fehlergruppe['name']}').prop('required',true);
-			</tal:loop>
-		  } else  {
-		  }
-		});
-		$("#FehlerGruppe").trigger("change");
-		</script>
-
-		<div id="FehlercodesErlaeuterung"></div>
+        <script  type="text/javascript">
+        $("#FehlerGruppe").change(function() {
+            <tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
+            $('#${fehlergruppe['name']}').hide();
+            $('#${fehlergruppe['name']}').prop('required',false);
+            $('#FehlercodesErlaeuterung').hide();
+            </tal:loop>
 
 
+              if (false) {
+            <tal:loop tal:repeat="fehlergruppe FehlerursachenGruppen">
+              } else if ($(this).val() == "${fehlergruppe['name']}") {
+                $('#${fehlergruppe['name']}').show();
+                $('#${fehlergruppe['name']}').prop('required',true);
+            </tal:loop>
+          } else  {
+          }
+        });
+        $("#FehlerGruppe").trigger("change");
+        </script>
 
-	</p>
+        <div id="FehlercodesErlaeuterung"></div>
+
+
+
+    </p>
     <p>
-		<label for="Bauteil"><span>betroffene Bauteile (ERP)</span></label>
-		<input type="text" id="Bauteil" name="Bauteil" placeholder="212342,123456 oder -" required pattern="^-$|^[0-9]{6}(_[0-9]{3})?(,[0-9]{6}(_[0-9]{3})?)*$" title="Welches Teil hat das Problem konkret ausgelöst? z. B., Welches Bauteil war defekt? 
-AX-Nummer von einem oder mehreren ursächlichen Artikeln, durch Komma getrennt (keine Leerzeichen). 
+        <label for="Bauteil"><span>betroffene Bauteile (ERP)</span></label>
+        <input type="text" id="Bauteil" name="Bauteil" placeholder="212342,123456 oder -" required pattern="^-$|^[0-9]{6}(_[0-9]{3})?(,[0-9]{6}(_[0-9]{3})?)*$" title="Welches Teil hat das Problem konkret ausgelöst? z. B., Welches Bauteil war defekt?
+AX-Nummer von einem oder mehreren ursächlichen Artikeln, durch Komma getrennt (keine Leerzeichen).
 Bei Baugruppen bitte die übliche Notation mit xxxxxx_xxx verwenden.
 Falls nicht zutreffend: Bitte '-' eintragen.
 ">
@@ -245,82 +245,82 @@ Falls nicht zutreffend: Bitte '-' eintragen.
     <h2>Wie?</h2>
     <p>
 
-		<label for="Zeit"><span>Stoppzeit (h)</span></label>
-		<input type="number" id="Zeit" name="Zeit" step="any" min="0" placeholder="2,75" oninput="check(this)" required title="Wartezeit in Stunden, bis die Aufgabe fortgesetzt werden konnte.">
-		<script>
-		 function check(input) {
-		   if (input.value == 0) {
-			 input.setCustomValidity('Der Wert muss größer als 0 sein.');
-		   } else {
-			 // input is fine -- reset the error message
-			 input.setCustomValidity('');
-		   }
-		 }
-		</script>
+        <label for="Zeit"><span>Stoppzeit (h)</span></label>
+        <input type="number" id="Zeit" name="Zeit" step="any" min="0" placeholder="2,75" oninput="check(this)" required title="Wartezeit in Stunden, bis die Aufgabe fortgesetzt werden konnte.">
+        <script>
+         function check(input) {
+           if (input.value == 0) {
+             input.setCustomValidity('Der Wert muss größer als 0 sein.');
+           } else {
+             // input is fine -- reset the error message
+             input.setCustomValidity('');
+           }
+         }
+        </script>
     </p>
     <p>
 
-		<label for="Verursacht_Gattung"><span>Verursacht durch</span></label>
-		<select name="Verursacht_Gattung" id="Verursacht_Gattung" style="width:200px" required>
-			<option hidden disabled selected value> -- Bitte auswählen -- </option>
-				<option value="Gruppe">Gruppe</option>
-				<option value="Kreditor">Kreditor</option>
-				<option value="Hersteller">Hersteller (falls er kein Kreditor ist!)</option>
-				<option value="unbekannt">unbekannt</option>
-		</select> 
-		<select name="Verursacht_Gruppe" id="Verursacht_Gruppe" style="width:200px">
-			<option hidden disabled selected value> -- Bitte auswählen -- </option>
-				<tal:loop tal:repeat="gruppe Gruppen">
-					<option value="${gruppe['id']}">${gruppe['name']}</option>
-				</tal:loop>
-		</select> 
-		<input type="text" id="Verursacht_Kreditor" name="Verursacht_Kreditor" placeholder="70028" style="width:200px", pattern="^7[0-9]{4}$" title="'7xxxx' : Kreditor, siehe AX"> 
-		<input type="text" id="Verursacht_Hersteller" name="Verursacht_Hersteller" placeholder="Samsung" style="width:200px" pattern="^(.+|unbekannt)$" title="Name des Herstellers oder 'unbekannt'"> 
+        <label for="Verursacht_Gattung"><span>Verursacht durch</span></label>
+        <select name="Verursacht_Gattung" id="Verursacht_Gattung" style="width:200px" required>
+            <option hidden disabled selected value> -- Bitte auswählen -- </option>
+                <option value="Gruppe">Gruppe</option>
+                <option value="Kreditor">Kreditor</option>
+                <option value="Hersteller">Hersteller (falls er kein Kreditor ist!)</option>
+                <option value="unbekannt">unbekannt</option>
+        </select>
+        <select name="Verursacht_Gruppe" id="Verursacht_Gruppe" style="width:200px">
+            <option hidden disabled selected value> -- Bitte auswählen -- </option>
+                <tal:loop tal:repeat="gruppe Gruppen">
+                    <option value="${gruppe['id']}">${gruppe['name']}</option>
+                </tal:loop>
+        </select>
+        <input type="text" id="Verursacht_Kreditor" name="Verursacht_Kreditor" placeholder="70028" style="width:200px", pattern="^7[0-9]{4}$" title="'7xxxx' : Kreditor, siehe AX">
+        <input type="text" id="Verursacht_Hersteller" name="Verursacht_Hersteller" placeholder="Samsung" style="width:200px" pattern="^(.+|unbekannt)$" title="Name des Herstellers oder 'unbekannt'">
 
-	<script  type="text/javascript">
-	$("#Verursacht_Gattung").change(function() {
-		$('#Verursacht_Gruppe').hide();
-		$('#Verursacht_Gruppe').prop('required',false);
-		$('#Verursacht_Kreditor').hide();
-		$('#Verursacht_Kreditor').prop('required',false);
-		$('#Verursacht_Hersteller').hide();
-		$('#Verursacht_Hersteller').prop('required',false);
-	  if ($(this).val() == "Gruppe") {
-		$('#Verursacht_Gruppe').show();
-		$('#Verursacht_Gruppe').prop('required',true);
-	  } else if ($(this).val() == "Kreditor") {
-		$('#Verursacht_Kreditor').show();
-		$('#Verursacht_Kreditor').prop('required',true);
-	  } else if ($(this).val() == "Hersteller") {
-		$('#Verursacht_Hersteller').show();
-		$('#Verursacht_Hersteller').prop('required',true);
-	  } else  {
-	  }
-	});
-	$("#Verursacht_Gattung").trigger("change");
-	</script>
+    <script  type="text/javascript">
+    $("#Verursacht_Gattung").change(function() {
+        $('#Verursacht_Gruppe').hide();
+        $('#Verursacht_Gruppe').prop('required',false);
+        $('#Verursacht_Kreditor').hide();
+        $('#Verursacht_Kreditor').prop('required',false);
+        $('#Verursacht_Hersteller').hide();
+        $('#Verursacht_Hersteller').prop('required',false);
+      if ($(this).val() == "Gruppe") {
+        $('#Verursacht_Gruppe').show();
+        $('#Verursacht_Gruppe').prop('required',true);
+      } else if ($(this).val() == "Kreditor") {
+        $('#Verursacht_Kreditor').show();
+        $('#Verursacht_Kreditor').prop('required',true);
+      } else if ($(this).val() == "Hersteller") {
+        $('#Verursacht_Hersteller').show();
+        $('#Verursacht_Hersteller').prop('required',true);
+      } else  {
+      }
+    });
+    $("#Verursacht_Gattung").trigger("change");
+    </script>
     </p>
 </section>
 
 
 <section>
-	<h2>Meldung</h2>
-	<input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Optionen">
-	<span class="volltext">
+    <h2>Meldung</h2>
+    <input type="checkbox" class="hackbox mehr_lesen" id="mehr_lesen_Optionen">
+    <span class="volltext">
 
-		<p style="filter: blur(1.0px);">
-			<label for="Reparaturauftrag"><span>automatisch Reparaturauftrag anlegen</span></label>
-			<input disabled type="checkbox" name="Reparaturauftrag" name="Reparaturauftrag" value="Reparaturauftrag"> <span style="font-size:60%">(Pflicht, wenn Elektronik-Produktion hinzugezogen wird.)</span>
-		</p>
-		<p>
-			<label for="Reparaturauftrag"><span>Antrag auf Sonderfreigabe</span></label>
-			<input type="checkbox" name="Sonderfreigabe" value="Sonderfreigabe">
-		</p>
-	</span>
-	<label class="mehr_lesen" for="mehr_lesen_Optionen">NCR Optionen</label>
-	<input type="hidden" name="Gruppe" value="${Gruppe['id']}">
-	<p> <button type="submit" name="submit">Meldung abschicken</button> </p>
- </section>   
+        <p style="filter: blur(1.0px);">
+            <label for="Reparaturauftrag"><span>automatisch Reparaturauftrag anlegen</span></label>
+            <input disabled type="checkbox" name="Reparaturauftrag" name="Reparaturauftrag" value="Reparaturauftrag"> <span style="font-size:60%">(Pflicht, wenn Elektronik-Produktion hinzugezogen wird.)</span>
+        </p>
+        <p>
+            <label for="Reparaturauftrag"><span>Antrag auf Sonderfreigabe</span></label>
+            <input type="checkbox" name="Sonderfreigabe" value="Sonderfreigabe">
+        </p>
+    </span>
+    <label class="mehr_lesen" for="mehr_lesen_Optionen">NCR Optionen</label>
+    <input type="hidden" name="Gruppe" value="${Gruppe['id']}">
+    <p> <button type="submit" name="submit">Meldung abschicken</button> </p>
+ </section>  
 
 </form>
 
