@@ -274,7 +274,6 @@ def my_view_testpage(request):
 
 @view_config(route_name='Rohdaten', renderer='csv')
 def Rohdaten(request):
-    project_id = 'e-bu-ncr-tracker'
     project_id = Config['project_id']
     StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
     StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
@@ -326,7 +325,6 @@ def Rohdaten(request):
 
 @view_config(route_name='RohdatenExcel', renderer='xlsx')
 def Rohdaten2(request):
-    project_id = 'e-bu-ncr-tracker'
     project_id = Config['project_id']
     StartDatumStr = "{}-{}-{}".format(request.matchdict['StartJahr'], request.matchdict['StartMonat'], request.matchdict['StartTag'])
     StoppDatumStr = "{}-{}-{}".format(request.matchdict['StoppJahr'], request.matchdict['StoppMonat'], request.matchdict['StoppTag'])
