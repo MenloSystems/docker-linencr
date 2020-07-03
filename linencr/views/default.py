@@ -44,8 +44,8 @@ trackers = [
     {'id': t['id'], 'name': t['name']} for t in MenRedmine.tracker.all()
 ]
 
-tracker_Doku = next(item for item in trackers if item["name"] == "Problem bereits gelöst")
-tracker_Reparatur = next(item for item in trackers if item["name"] == "Problemlösung erforderlich")
+tracker_Doku = next(item for item in trackers if item["name"] == "Meldung")
+tracker_Reparatur = next(item for item in trackers if item["name"] == "Reparatur")
 Feld_MeldendeGruppe = next(item for item in custom_fields if item["name"] == "Meldende Gruppe")
 Feld_Baugruppe = next(item for item in custom_fields if item["name"] == "Baugruppe")
 Feld_Fehler = next(item for item in custom_fields if item["name"] == "Fehlerursache")
