@@ -70,7 +70,7 @@ class XLSXRenderer(object):
 
         # Data
         for raw in value.get('rows', []):
-            row = [raw[key] for key in value.get('header', [])]
+            row = [raw[key] if key in raw else "" for key in value.get('header', [])]
             ws.append(row)
 
         request = system.get('request')
