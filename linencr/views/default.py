@@ -341,7 +341,7 @@ def Rohdaten2(request):
                 d['assigned_to'] = issue.assigned_to.id
         if hasattr(issue, 'custom_fields'):
             for cf in issue['custom_fields']:
-                d[cf.name] = "{}".format(cf.value)
+                d[cf.name] = "{}".format(cf.value) if hasattr(cf, 'value') else ""
         total_duration = 0
         #  Todo: Sobald eine neue Version vom RM verfügbar ist, issue."spent_hours" auswerten! Zusammenfassen mit csv (Q3.2020)
         if hasattr(issue, 'time_entries'):
